@@ -1,0 +1,13 @@
+CXX         = g++
+CXXFLAGS   += -DNDEBUG -Wall -g -O3 -fPIC
+MXX         = mpicxx
+MXXFLAGS   += -show -DNDEBUG -Wall -O3 -g
+INCDIRS    += -I. -I /cluster/include -I /cluster/ATLAS3.6.0/include
+DYLIB_EXT   = so
+CXXDYLIB    = -shared
+MXXDYLIB    = -shared
+LDFLAGS    += -L /cluster/lib -L /cluster/ATLAS3.6.0/lib/Linux_HAMMER64SSE2_2/
+EX_LDFLAGS += -llapack -lcblas -lf77blas -latlas -lg2c
+ifdef STIP
+CXXFLAGS += -DSTIP
+endif

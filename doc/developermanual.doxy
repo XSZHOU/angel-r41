@@ -1,0 +1,239 @@
+/*! \mainpage ANGEL - A Nonequilibrium Greens Function Solver For LEDs
+ 
+This page is meant to be a supplement to the class-by-class, method-by-method, variable-by-variable Doxygen documentation. Whilst far from being complete, I hope it can be some use for everybody trying to further develop ANGEL.
+
+So far, ANGEL was developed by Sebastian Steiger (steiger@purdue.edu) during his PhD at the Integrated Systems Laboraty, ETH Zurich, from 2008-2009.
+
+\section sec_functionality Functionality of ANGEL
+
+tbd
+
+\section sim_ideas General Ideas for the Simulator
+
+tbd
+
+\section installation_sec Prerequisites, Installation
+
+\subsection Obtaining ANGEL
+
+ANGEL is an open source svn project on the Nanohub (www.nanohub.org) and can be obtained for free after registering there.
+
+\subsection am64_compil Compiling ANGEL on amd64
+
+tbd
+
+\subsubsection prereq Prerequisites
+
+ANGEL is MPI-parallelized meaning that it must be run on multiple computers. If you don't know what MPI is, you will not be able to use ANGEL. It was compiled and tested with MPICH2 and gcc-4.3 or higher.
+
+Inspect <tt>Makefile.amd64</tt> for a list of libraries which are needed. Here are some mandatory things:
+
+- tbd
+
+Here are some optional things that can be included:
+
+- (Recommended) tdb
+- (Optional) tbd
+- (Experimental) tbd
+
+
+\subsection amd64_subsec Running ANGEL on amd64
+
+Please refer to the user manual.
+
+
+\section ideas Main Programming Ideas
+
+tbd
+
+\section geometry_sec The Geometry class
+
+
+The <tt>Geometry</tt> object is a container for all the geometrical entities of a grid (mesh). The basic entity is the \e vertex. Vertices are connected via \e edges. This partitions the space into \e elements. Elements possess edges and vertices and in 3D also \e faces. Elements are grouped into \e regions. The last quantity contained in a <tt>Geometry</tt> object are the \e contacts. They are not treated as regions (different from DF-ISE). A vertex has the property to which contact it belongs (NULL if it is not within a contact); conversely, the Contact object comprises a list of vertices along with a list of boundary conditions that are assigned to it. 
+
+The <tt>Geometry</tt> object offers a range of frequently used functions for convenience. Some of the results of these functions are precomputed and stored in order to speed up the simulation. For example, a <tt>Vertex</tt> may be part of an <tt>Edge</tt> but not the opposite; however, it is sometimes necessary to know all the edges connected to the vertex. This information is computed and stored in the <tt>Geometry</tt> class. All these entities should be handled by their class pointer and not by their number. This minimizes programming errors already at compile time. 
+
+Most methods are self-explanatory from their name, or else there is documentation in the source code. 
+
+<tt>Element::inv_jacobian</tt> A point within the element may be described as \f$\mathbf{x} = \sum_i \lambda_i f_i(\mathbf{x}) \f$ where \f$ i \f$ indices the element vertices and \f$ f_i \f$ are the <em>element shapefunctions</em> that are defined as being linear, =1 at vertex \f$ i \f$ and =0 at any other vertex. Since they are linear, \f$ \partial f_i / \partial x_j \f$ is just a constant. The inverse of this quantity is frequently used in e.g. finite element analysis, and also for the determination if a point is within a given element (in that case, all coefficients must fulfill \f$ 0\leq \lambda_i \leq 1 \f$). It is stored as \f$ \left( \frac{\partial f_i}{\partial x_j} \right)^{-1}_{ab} = \f$ <tt>inv_jacobian[dim*a+b]</tt>. 
+
+It should be noted that AQUA does not rely on any ordering of the edges or vertices on an element. This ordering is arbitrary. And this poses a problem at the moment when rectangular meshes are used!
+
+
+
+\section eqn_sec The Equation class (and derived classes)
+
+<tt>Equation</tt> provides a generic base class for equations to be solved by the Newton method. It has two subclasses from which the specific equations can be derived: 
+
+<tt>ImplicitEquation</tt>: Usable for any equation of the form \f$ \mathbf{f}(\mathbf{x},...)=0 \f$ where \f$ \mathbf{x} \f$ is the solution variable. 
+
+<tt>ExplicitEquation</tt>: Usable for equations of the form \f$ \mathbf{x}=... \f$. These are rather trivial equations and do not have to be included in the Newton solver; any dependency of other quantities on \f$ \mathbf{x} \f$ can be eliminated by just substituting the given equation for \f$ \mathbf{x} \f$. The beauty of AQUA is that such substitutions are handled automatically, including usage of the chain rule which is needed for the derivatives in the Jacobian! 
+
+As an example, consider the equations
+\f[ f(a,b,c) = 0, \;\;\; g(a,b,c) = 0,  \;\;\; c = h(a). \f]
+The first two equations have the solution variables a and b and are of the type <tt>ImplicitEquation</tt>. The third equation explicitly solves for c and is of the type <tt>ExplicitEquation</tt>. AQUA will by default substitute equation 3 in equations 1 and 2 and compute the correct derivatives:
+\f[
+\frac{\partial f(a,b,c(a))}{\partial a} = \frac{\partial f(a,b,c)}{\partial a} + \frac{\partial f(a,b,c)}{\partial c} \cdot \frac{\partial h}{ \partial a}.
+\f]
+The great advantage of this is that <em>the user only has to specify the partial derivaties of an equation w.r.t. all its dependencies without having to worry how the dependency is specified</em>! In other words, the implementations of \f$ f,g,h \f$ in the above example are totally independent yet any explicit relations like \f$ h \f$ are reduced to minimize the size of the system to solve. 
+
+
+\subsection impeqn_subsec Implementation of an ImplicitEquation by the user
+Two methods have to be implemented:
+
+- <tt>get_newton_function(uint line) const</tt> The Newton function \f$ F_i(\mathbf{x},...)=0 \f$ where \f$ i=0...n-1 \f$ and the solution variable \f$ \mathbf{x} \f$ of the equation is \f$ n \f$-dimensional.
+
+- <tt>get_newton_direct_derivatives(uint line, const Equation * eqn, uint & nonzeros, uint indices[], double coeffs[]) const</tt> must return an array of indices (length <tt>nonzeros</tt>) of the Equation eqn that \f$ f_{line}(...)=0 \f$ really depends on. If <tt>coeffs!=NULL</tt>, also the derivatives w.r.t.  these indices must be computed.
+
+
+\subsection expeqn_subsec Implementation of an ExplicitEquation by the user
+
+The variable is given explicitly by \f$ x_i = f_i(...) \f$. Note that \f$ f \f$ is not the Newton function; this would be \f$ F_i(x_i,...) = x_i - f_i(...) = 0 \f$. Two methods have to be implemented:
+
+- <tt>compute_value(uint line) const</tt> computes directly \f$ f_i \f$.
+ 
+- <tt>direct_derivatives(uint line, const Equation * eqn, uint & nonzeros, uint indices [], double coeff []) const</tt> must return an array of indices (length <tt>nonzeros</tt>) of the Equation eqn that \f$ x_{line}=... \f$ really depends on. If <tt>coeffs!=NULL</tt>, also the derivatives w.r.t.  these indices must be computed.
+
+
+
+\subsection derived_classes_subsec Derived classes (example)
+
+As a prototypic example we consider the 1D Poisson equation using a finite difference discretization:
+\f[
+F_i(\vec{\phi},\vec{\epsilon},\vec{n}) = -\phi_{i-1} + 2\phi_i - \phi_{i+1} + \frac{e^2}{\epsilon_i} n_i = 0.
+\f]
+The solution variable of this equation shall be \f$ \vec{\phi} = \{ \phi_1, \phi_2, ... \} \f$. The dependencies of this equation are \f$ \vec{\epsilon} \f$ and \f$ \vec{n} \f$. Since the equations cannot be written in the form \f$ \phi_i = f_i(\vec{\epsilon},\vec{n}) \f$ the equation is implicit. 
+
+We decide that \f$ n \f$ will be stored in <tt>dependencies[0]</tt> and \f$ \epsilon \f$ will be stored in <tt>dependencies[1]</tt>. Since we do not expect the equations for \f$ \epsilon \f$ and \f$ n \f$ to be necessarily set up \e before the Poisson equation, our class will have two methods <tt>allocate_epsilon</tt> and <tt>allocate_charge</tt> which allow to modify <tt>dependencies[.]</tt>. 
+
+For the Newton solver we must implement three methods:
+
+- <tt>get_newton_function</tt>: This is nothing else than the LHS of the above equation using <tt>this->get_value(.)</tt> and  <tt>dependencies[.]->get_value(i)</tt>.
+
+- <tt>get_newton_direct_derivatives</tt>: Implementation of this is best illustrated in an example:
+\verbatim
+ void Poisson::get_newton_direct_derivatives
+        (uint i, Equation * eqn, uint nonzeros, uint* indices, double* coeffs)
+{
+   if (eqn==this) {
+      nonzeros = 3;
+      indices[0] = i-1; indices[1] = i; indices[2] = i+1;
+      if (coeffs!=NULL) {
+          coeffs[0] = -1; coeffs[1] = 2; coeffs[2] = -1;
+      }
+      return;
+   } else if (eqn==dependencies[0]) {
+      nonzeros = 1;
+      indices[0] = i; 
+      if (coeffs!=NULL) {
+          coeffs[0] = \frac{e^2}{\epsilon_i};
+       }
+       return;
+   } else if (eqn==dependencies[1]) { 
+      ...
+\endverbatim
+
+<tt>get_dependence_sparsity</tt>: This is much the same, except that <tt>coeffs</tt> is not computed.
+
+
+Now suppose that we would like to have a constant dielectricity as a model. This would certainly be an explicit equation. The implementation would look like this:
+
+- <tt>compute_value(...) { return 11.5; }</tt>
+
+- <tt>direct_derivatives(..) { AQUA_EXCEPTION("Should not be called."); }</tt>
+
+It is obvious that in this way, a minimum of implementation is required by the user. Note that <tt>direct_derivatives</tt> will never be called in this examples because there are no dependencies where derivatives have to be known. 
+
+
+
+\section newton_sec Newton Solver, Matrices
+
+\subsection newton_subsec Newton Solver
+
+A <tt>step</tt> (iteration) in the Newton solver computes an update \f$ \Delta \mathbf{x} \f$ to get the new approximation \f$ \mathbf{x}_{i+1} \f$ to the solution \f$ \mathbf{x} \f$ of \f$ \mathbf{F}(\mathbf{x})=0 \f$ where \f$ \mathbf{F} \f$ denotes the \f$ N \f$-dimensinal Newton function for the \f$ N \f$ variables \f$ x_\nu \f$. The Newton method computes the update as the linear correction to the existing value:
+\f[
+\mathbf{x}_{i+1} = \mathbf{x}_i + \Delta \mathbf{x}_i = \mathbf{x}_{i} - \mathbf{J}^{-1} \mathbf{F}(\mathbf{x}_{i}) = \mathbf{x}_{i} - \left( \frac{\partial F_\mu(\mathbf{x}_i)}{\partial x_\nu}\right)^{-1} \mathbf{x}_{i}.
+\f]
+\f$ \mathbf{J} \f$ is the Jacobian. The class <tt>NewtonSolver</tt> gets the lines in the Jacobian and the Newton function itself from the class <tt>Equation</tt> by the methods <tt>get_newton_derivatives</tt> and <tt>get_newton_function</tt>. An object has to be created with a complete list of Equations as the argument. The position of the nonzero entries in the Jacobian is therefore known from the beginning. Hence, the constructor already fixes the structure of the matrix which is stored in the compressed sparse row (CSR) format. 
+
+Once the Jacobian and RHS are assembled (by <tt>compute_jacobian</tt> and <tt>compute_rhs</tt>), they are handed over to a linear solver that solves the equation system
+\f[ \Delta \mathbf{x}_i = \mathbf{J}^{-1} \mathbf{F}(\mathbf{x}_{i}) \f]
+for \f$ \Delta \mathbf{x}_i \f$. 
+
+
+\subsection conv_subsec Convergence
+
+Convergence has to be fulfilled for every equation separately. The user has to specify a <em> reference size </em> for every equation (default=1) which lets the Newton solver know if a quantity is `big' or `small'. The error criterion reads
+\f[
+\frac{\| \Delta \mathbf{x}_i^{(e)} \|}{\| \mathbf{x}_i^{(e)} \|} < \epsilon_1 \qquad \mbox{or} \qquad \frac{\| \Delta \mathbf{x}_i^{(e)} \|}{ \mbox{ref}^{(e)} } < \epsilon_2 \qquad \mbox{ for all equations }e.
+\f]
+Here \f$ \epsilon_1 \f$ is the <em> relative error criterion </em>, \f$ \epsilon_2 \f$ is the <em> absolute error criterion </em> and \f$ \mbox{ref}^{(e)} \f$ denotes the reference size. The user has the possibility to specify \f$ \epsilon_i \f$, the default is \f$ 10^{-10} \f$ for both. Especially Newton iterations for the Fermi energy need to have very strict error criteria. 
+
+Furthermore, the user can set the maximum number of possible iterations before the solution procedure stops (default: 30). Some quantities exist for tracking the amount of time needed for the various steps. Apart from this, the only methods relevant to the user are
+
+- The constructor where all the equations (with fully set up dependencies) are handed over,
+- <tt>solve()</tt> and
+- <tt>reset()</tt> which prepares the solver for another solution procedure (e.g. with modified boundary conditions).
+
+
+
+\section io_sec Input/Output
+Structures are read in the class <tt>InputParser</tt> while output is written in <tt>OutputData</tt>.
+
+\subsection dfise The DF-ISE file format
+
+The TCAD simulation package Sentaurus Device features two data storage formats: DF-ISE and TDR. AQUA is at the moment capable of dealing with DF-ISE which needs a lot of disk space. The reader is referred to the corresponding section of the Sentaurus manual for details. A couple of things should be noted, however:
+
+- There is a separate, non-proprietary library called <tt>sebise</tt>, developed by the Steiger/Veprek software factory, which can read/write the files in the DF-ISE format.
+
+- Contacts are treated in DF-ISE as regions of lower dimensionality. There also exist elements of lower dimensionality. Both are discarded during the red in procedure in AQUA. A contact is instead a separate object, as described in the geometry setion of this manual. Since the correspondence is not 1:1 anymore, many entities in AQUA have an additional `external' index which stores the corresponding DF-ISE index.
+
+- Unfortunately the meshing tool NOFFSET is not able anymore to generate true 1D structures; instead, 2D structures are made which have no refinement in one direction. AQUA was able to detect such structures and convert them into 1D; however, this is now disabled and the favourable way is to use an old meshing tool like MESH to generate a true 1D structure.
+
+- AQUA at the moment is only capable of reading in scalar data fields (contained in the .dat-files) which are defined on vertices. Such datafields must furthermore be split into either one dataset per regions or one dataset for all regions.
+
+- There is a slight difference between the element types used in DF-ISE and the ones used in AQUA. AQUA has only been tested with intervals, triangles and tetrahedrons, i.e. the commonly encountered types. 
+
+- DF-ISE has a specific ordering of e.g. an element's edges, including negative indices when the direction of an edge is reversed. AQUA does not use this information. The ordering of geometric entities in AQUA is arbitrary.
+
+
+\subsection units Units
+
+The following assumptions concerning input/output data are made:
+
+- Vertex positions in input gridfiles must be given in \f$\mu\f$m. This has historical reasons (consistency with <em> Sentaurus Device </em>).
+
+- All input datafields (doping, ...) are assumed to have SI units! However, there is an option to switch between cm\f$^{-3}\f$ and m\f$^{-3}\f$ for the doping.
+
+- All output quantities have SI units!
+
+AQUA internally uses units specified in <tt>all.cpp</tt>. There a function <tt>constants::convert_from_SI</tt> is defined which fixes the units. It provides the one and only interface - the whole rest of AQUA is unit-independent! It is important to remember, however, that all quantities that are introduced somewhere in the simulator (fixed reference lengths, energy cutoffs or whatever) \e always have to given in the form <tt>convert_from_SI(</tt>(SI-value)<tt>)</tt>.
+
+As for the .quant file, this means that <tt>absolute_position</tt> quantities are measured in the same units as the grid file (i.e., \f$\mu\f$m) but <tt>length</tt>, <tt>area</tt> etc. need to be given in SI units.
+
+
+\subsection io_dirs Input and output directories
+
+Filenames and directories of input and output files are set at the beginning of the simulation in class <tt>Filenames</tt>. The user can specify the environment variables AQUADIR to set the directory where the library and material definitions sit and AQUAOUT to set the output base.
+
+
+
+\section notes_eqn Notes on various classes
+tbd
+
+
+\section wishlist Implementation wish list
+
+- tbd
+
+\section faq Frequently Asked Questions (FAQ)
+
+
+\subsection faq01 tbd
+
+tbd
+
+
+<b> Thank you for your interest in ANGEL. Please send comments, suggestions, bug reports, and any other kind of feedback to steiger@purdue.edu. Copyright (c) 2008-2009 Sebastian Steiger, Integrated Systems Laboratory, ETH Zurich. </b>
+
+*/ // end of mainpage

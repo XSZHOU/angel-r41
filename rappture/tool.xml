@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<run>
+
+
+  <tool>
+  <id>angel</id>
+  <name>ANGEL - A Nonequilibrium Green Function Solver for LEDs</name>
+  <version>
+    <identifier>1.01w</identifier>
+    <application>
+      <revision>50</revision>
+      <modified>2014-03-04 12:46:03 -0500 (Tue, 04 Mar 2014)</modified>
+      <installed>2014-03-04 12:47:38 EST</installed>
+      <directory id="top">/apps/angel/r50</directory>
+      <directory id="tool">/apps/angel/r50/rappture</directory>
+    </application>
+  </version>
+    <title>ANGEL</title>
+    <about>
+A Nonequilibrium Green Solver for LEDS.
+
+Nanohub edition: ballistic single-band effective mass model (i.e., no LEDs).
+
+To get the real deal (scattering, MPI parallelization, full control over structure and materials), download the code, install and run it yourself!
+
+Features of the full version (free!):
+- 2 bands (1 electron and 1 hole eff.mass band)
+- scattering: 
+   * photons (spontaneous emission of a multi-mode field)
+   * phonons (polar optical and acoustic)
+   * ionized impurities
+   * the phenomenological scattering of R. Golizadeh
+- full control over materials, material parameters and simulated structures
+- you can modify and extend the code (it's in C++)
+
+(c) 2008-2010 Sebastian Steiger, ETH Zurich and Purdue University. steiger@purdue.edu
+</about>
+    <command>
+      @tool/rapp_angel.bin @driver  
+    </command>
+    <limits>
+      <cputime>900</cputime>
+    </limits>
+    <layout>xxx</layout>
+    <control>xxx</control>
+    <analyzer>xxx</analyzer>
+    <reportJobFailures>1</reportJobFailures>
+  </tool>
+  
+  
+  <input>
+	  
+	  <group id="tabs"> 
+	  
+	  <group id="params"> <!-- tab 1 -->
+	  <about> <label>Settings</label> </about>
+	  <separator/>
+      <number id="temperature">
+	      <about> <label>Temperature</label> </about>
+          <units>K</units>
+          <default>300K</default>
+          <current>300K</current>
+      </number>
+	  <separator/>
+	  <group id="voltages"> <!-- subgroup 1 within tab 1 -->
+	      <about> 
+		      <label>Voltages</label>
+			  <description>Choose the voltages to be computed (consecutive ramping)</description>
+		  </about>
+	      <number id="V0">
+		      <about> 
+			      <label>Start voltage</label>
+				  <description>0V (equilibrium) is highly recommended</description>
+			  </about>
+              <units>V</units>
+			  <default>0V</default>
+			  <min>-1V</min>
+			  <max>1V</max>
+	      </number>
+	      <number id="V1">
+		      <about> 
+			      <label>End voltage</label>
+				  <description>Maximum voltage to be computed</description>
+			  </about>
+              <units>V</units>
+			  <default>0.1V</default>
+			  <min>-1V</min>
+			  <max>1V</max>
+	      </number>
+	      <number id="dV">
+		      <about> 
+			      <label>Voltage step</label>
+				  <description>Must have correct sign</description>
+			  </about>
+              <units>V</units>
+			  <default>0.05V</default>
+			  <min>-1V</min>
+			  <max>1V</max>
+	      </number>
+	  </group> <!-- voltages -->
+	  <separator/>
+	  <group id="numerics">
+	      <about> 
+		      <label>Numerical settings</label> 
+			  <description> These settings impact simulation duration and convergence behavior.</description>
+	      </about>
+	      <integer id="NE">
+		      <about> 
+			      <label>NE</label>
+				  <description>Number of energy points between Emin and Emax. The energy grid is denser around the Fermilevels.</description>
+			  </about>
+			  <default>200</default>
+			  <min>30</min>
+			  <max>1000</max>
+	      </integer>
+	      <number id="Emin">
+		      <about> 
+			      <label>Emin</label>
+				  <description>Minimum energy to be computed (keep in mind simulated material).</description>
+			  </about>
+              <units>eV</units>
+			  <default>1.2eV</default>
+			  <min>-10eV</min>
+			  <max>10eV</max>
+	      </number>
+	      <number id="Emax">
+		      <about> 
+			      <label>Emax</label>
+				  <description>Maximum energy to be computed (numerical cutoff).</description>
+			  </about>
+              <units>eV</units>
+			  <default>1.9eV</default>
+			  <min>-10eV</min>
+			  <max>10eV</max>
+	      </number>
+	  </group> <!-- numerics -->
+	  </group> <!-- params -->
+	  
+	  <group id="struct">
+	  <about> <label>Structure</label> <description> Only the conduction band edge and and electron effective mass enter the calculation </description></about>
+	  <choice id="mat0">
+	      <about> <label> Layer 1 material </label> </about>
+	      <option><about><label>GaAs</label></about> <value>0</value> </option>
+	      <option><about><label>AlAs</label></about> <value>1</value> </option>
+	      <option><about><label>InAs</label></about> <value>2</value> </option>
+	      <option><about><label>AlGaAs, Al=0.3</label></about> <value>10</value></option>
+	      <option><about><label>InGaAs, In=0.3</label></about> <value>11</value></option>
+	      <option><about><label>InAlAs, In=0.3</label></about> <value>12</value></option>
+	      <option><about><label>InP</label></about> <value>5</value> </option>
+	      <option><about><label>GaN</label></about> <value>6</value> </option>
+	      <option><about><label>AlN</label></about> <value>7</value> </option>
+	      <option><about><label>InN</label></about> <value>8</value> </option>
+	      <option><about><label>AlGaN, Al=0.3</label></about> <value>16</value></option>
+	      <option><about><label>InGaN, In=0.3</label></about> <value>17</value></option>
+	      <option><about><label>Si</label></about> <value>20</value></option>
+	      <default>GaAs</default> 
+	  </choice>
+	  <choice id="mat1">
+	      <about> <label> Layer 2 material </label> </about>
+	      <option><about><label>GaAs</label></about> <value>0</value> </option>
+	      <option><about><label>AlAs</label></about> <value>1</value> </option>
+	      <option><about><label>InAs</label></about> <value>2</value> </option>
+	      <option><about><label>AlGaAs, Al=0.3</label></about> <value>10</value></option>
+	      <option><about><label>InGaAs, In=0.3</label></about> <value>11</value></option>
+	      <option><about><label>InAlAs, In=0.3</label></about> <value>12</value></option>
+	      <option><about><label>InP</label></about> <value>5</value> </option>
+	      <option><about><label>GaN</label></about> <value>6</value> </option>
+	      <option><about><label>AlN</label></about> <value>7</value> </option>
+	      <option><about><label>InN</label></about> <value>8</value> </option>
+	      <option><about><label>AlGaN, Al=0.3</label></about> <value>16</value></option>
+	      <option><about><label>InGaN, In=0.3</label></about> <value>17</value></option>
+	      <option><about><label>Si</label></about> <value>20</value></option>
+	      <default>GaAs</default> 
+	  </choice>
+	  <choice id="mat2">
+	      <about> <label> Layer 3 material </label> </about>
+	      <option><about><label>GaAs</label></about> <value>0</value> </option>
+	      <option><about><label>AlAs</label></about> <value>1</value> </option>
+	      <option><about><label>InAs</label></about> <value>2</value> </option>
+	      <option><about><label>AlGaAs, Al=0.3</label></about> <value>10</value></option>
+	      <option><about><label>InGaAs, In=0.3</label></about> <value>11</value></option>
+	      <option><about><label>InAlAs, In=0.3</label></about> <value>12</value></option>
+	      <option><about><label>InP</label></about> <value>5</value> </option>
+	      <option><about><label>GaN</label></about> <value>6</value> </option>
+	      <option><about><label>AlN</label></about> <value>7</value> </option>
+	      <option><about><label>InN</label></about> <value>8</value> </option>
+	      <option><about><label>AlGaN, Al=0.3</label></about> <value>16</value></option>
+	      <option><about><label>InGaN, In=0.3</label></about> <value>17</value></option>
+	      <option><about><label>Si</label></about> <value>20</value></option>
+	      <default>GaAs</default> 
+	  </choice>
+      <structure>
+      <default>
+      <units>nm</units>  
+	  
+      <parameters>
+        <number id="doping0">  <about><label>n+ Doping</label></about> <units>cm-3</units>
+		     <default>2e19cm-3</default> <current>2e19cm-3</current>  </number>
+        <number id="doping1"> <about><label>n Doping</label></about>  <units>cm-3</units> 
+		     <default>2e18cm-3</default>  <current>2e18cm-3</current> </number>
+        <number id="doping2">  <about><label>n Doping</label></about>  <units>cm-3</units> 
+		     <default>2e19cm-3</default>  <current>2e19cm-3</current> </number>
+        <number id="length0"> <about><label>n+ length</label></about>  <units>nm</units>
+             <default>12nm</default>  <current>12nm</current> </number>
+        <number id="length1">  <about><label>n length</label></about>  <units>nm</units>
+             <default>32nm</default>  <current>32nm</current> </number>
+        <number id="length2"> <about><label>n length</label></about> <units>nm</units>
+             <default>12nm</default>  <current>12nm</current> </number>
+        <number id="dx0"> <about><label>n+ dx</label></about> <units>nm</units>
+             <default>0.8nm</default>  <current>0.8nm</current> </number>
+        <number id="dx1"> <about><label>n dx</label></about> <units>nm</units>
+             <default>0.8nm</default>  <current>0.8nm</current> </number>
+        <number id="dx2"> <about><label>n dx</label></about> <units>nm</units>
+             <default>0.8nm</default>  <current>0.8nm</current> </number>
+      </parameters>
+
+      <components>
+        <box>
+          <about> <label>Left</label>  <color>green</color> </about>
+          <!-- <material> input.group(tabs).group(struct).choice(mat1).current </material> -->
+          <corner>0nm</corner><corner>10nm</corner>		 
+        </box>
+        <box>
+          <about> <label>Middle</label>  <color>white</color> </about>
+          <!-- <material>GaAs</material> -->
+          <corner>10nm</corner> <corner>20nm</corner>		 
+        </box>
+        <box>
+          <about> <label>Right</label> <color>green</color> </about>
+          <!-- <material>GaAs</material> -->
+          <corner>20nm</corner> <corner>30nm</corner>		  
+        </box>
+      </components>
+
+      <fields>
+        <field>
+          <about>
+		    <label>Length</label>
+            <color>black</color>
+          </about>
+          <units>nm</units>
+          <component> <constant>length0</constant> <domain>box0</domain> </component>
+          <component> <constant>length1</constant> <domain>box1</domain> </component>
+          <component> <constant>length2</constant> <domain>box2</domain> </component>
+       </field>
+       <field>
+          <about>
+		    <label>dx</label>
+            <color>black</color>
+          </about>
+          <units>nm</units>
+          <component> <constant>dx0</constant> <domain>box0</domain> </component>
+          <component> <constant>dx1</constant> <domain>box1</domain> </component>
+          <component> <constant>dx2</constant> <domain>box2</domain> </component>
+       </field>
+       <field>
+          <about>
+		    <label>Doping</label>
+            <color>black</color>
+            <scale>log</scale>
+          </about>
+          <units>cm-3</units>
+          <component> <constant>doping0</constant> <domain>box0</domain> </component>
+          <component> <constant>doping1</constant> <domain>box1</domain> </component>
+          <component> <constant>doping2</constant> <domain>box2</domain> </component>
+       </field>
+      </fields>
+	  
+      </default>
+      </structure>
+
+	  </group> <!-- struct -->
+	  <group id="notes">
+	      <about> <label>Notes</label> </about>
+          <!-- <note><contents>file://tool.html</contents></note> -->
+		  <string id="note">
+		  <about><label>Notes</label></about>
+		  <size>40x30</size> 
+        <default>
+I know... it's kind of slow for what it does... ANGEL computes a lot of quantities that are not necessary in ballistic simulations.
+		
+Right now the Nanohub version runs single-band effective mass ballistic simulations only. 
+These simulations have been done many times - and you can do it yourself in MATLAB, if you follow the excellent tutorial of Supriyo Datta, Superlatt. and Microstruct. 28, 253 (2000).
+        
+BUT:
+The underlying engine ANGEL can do much more than that. It has an MPI-parallelized energy space to be able and calculate the k-dependence of the Green's functions explicitly (unlike in the Nanohub tool). It has all sorts of scattering mechanisms implemented. It can couple an electron and a hole band. So in essence, it's really cool!
+		 
+I hope this tool acts as a teaser for the paradise of possible simulations that awaits you when you install ANGEL on your own supercomputer and run it in parallel!
+
+Enjoy and have fun with the wonderful world of NEGF :-)
+Sebastian
+
+PS: I don't know exactly which material combinations work, and which don't...
+          </default></string>
+
+	  
+	  </group>
+	  </group> <!-- tabs -->
+  </input>
+  
+  
+  <output>		
+      <sequence id="nE">
+	      <about> <label>n(x,E)</label> <description> spectrally resolved density </description> </about>
+	      <index> <label>Voltage</label> <units>V</units> </index>
+	  </sequence>
+      <sequence id="LDOS">
+	      <about> <label>LDOS(x,E)</label> <description> local density of states </description> </about>
+	      <index> <label>Voltage</label> <units>V</units> </index>
+	  </sequence>
+      <sequence id="JE">
+	      <about> <label>J(x,E)</label> <description> spectrally resolved current </description> </about>
+	      <index> <label>Voltage</label> <units>V</units> </index>
+	  </sequence>
+	  <curve id="IV">
+          <about> <label>IV-curve</label><description>Current-voltage characteristics</description></about>
+          <xaxis><label>Voltage</label><units>V</units></xaxis>
+          <yaxis><label>Current</label><units>A/cm2</units></yaxis>
+          <component>
+		  <!-- <xy>...</xy> -->
+          </component>
+       </curve>
+  </output>
+  
+  
+</run>

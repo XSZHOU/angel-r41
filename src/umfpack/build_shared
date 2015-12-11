@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#CC=$CC
+CC=g++
+$CC -framework Accelerate -shared -Wl,-install_name,libumfpack.so -o libumfpack.so `ls UMFPACK/Lib/*.o AMD/Lib/*.o`
+ 

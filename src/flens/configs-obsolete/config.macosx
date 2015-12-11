@@ -1,0 +1,23 @@
+CXX         = g++-4.3
+CXXDYLIB    = -dynamiclib
+MXXDYLIB    = -dynamiclib
+MXX         = mpic++
+DYLIB_EXT   = dylib
+
+# optimized-mode
+#CXXFLAGS   += -Wall -O3 -DVECLIB -DNDEBUG -funroll-loops
+
+# profile-mode
+# CXXFLAGS   += -Wall -p -g -O3 -DVECLIB -DNDEBUG
+
+# debug-mode
+CXXFLAGS   += -Wall -p -g -O3 -DVECLIB -DDEBUG
+
+MXXFLAGS   += $(CXXFLAGS) -Wno-long-double
+LDFLAGS    += -framework Accelerate
+EX_LDFLAGS += -bind_at_load
+
+ifdef GMP_HOME
+  CXXFLAGS += -DMPFR -I$(MPFR_HOME)/include
+  LDFLAGS += -L$(MPFR_HOME)/lib -lgmpxx -lgmp
+endif

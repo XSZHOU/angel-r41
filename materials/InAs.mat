@@ -1,0 +1,137 @@
+# confdef: material_zincblende.cnf
+# simple zincblende material definition ....
+#
+# RULE 1: include a definition file via "# confdef:" on the first line
+# RULE 2: do not put a ";" or something else at the end
+# RULE 3: everything behind a # is neglected (except # tdkpconfdef)
+#
+# References:
+# Chuang: S.L.Chuang, Physics of Optoelectronic Devices, Wiley
+# Dessis / Sentaurus Device Simulator
+# Vurgaftman: Vurgaftman, Meyer and Ram-Mohan, J.Appl.Phys. 89, 5815 (2001)
+
+#####################################################
+# BAND PARAMETERS
+#####################################################
+
+bandgap_0K            			= 0.417 	# 0K    was 0.4105, Chuang: 0.42eV, Vurgaftman: 0.417eV
+bandgap_alpha         			= 2.76e-4	# Vurgaftman. was 3.35e-4 (Dessis?)
+bandgap_beta          			= 93		# Vurgaftman. was 248 (Dessis?)
+valence_band_edge     			= 0.21 		# difference of +0.21eV to GaAs (Vurgi)
+
+electron_effective_mass  		= 0.026		# Vurgaftman. rv: 0.02276. Chuang: 0.023
+hole_effective_mass    			= 0.40966 	# effective DOS mass, Dessis? Piprek: 0.573
+
+luttinger_parameter_1  			= 20.0		# Vurgaftman. rv: 19.67. Chuang: 20.4 
+luttinger_parameter_2  			= 8.5		# Vurgaftman. rv: 8.37. Chuang: 8.3
+luttinger_parameter_3  			= 9.2		# Vurgaftman. Chuang
+optical_matrix_element 			= 16.0		# selber. Vurgaftman: 21.5, Chuang: 20.7
+spin_orbit_splitting   			= 0.39		# Vurgaftman, Chuang: 0.38
+
+strain_potential_ac  			= -5.08		# Vurgaftman, Chuang
+strain_potential_av  			=  1.00		# Chuang, Vurgaftman (minus sign). here a = ac-av
+strain_potential_b   			= -1.8		# Vurgaftman, Chuang
+strain_potential_d   			= -3.6		# Vurgaftman, Chuang	
+
+lattice_constant     			= 6.058		# 300K, Vurgaftman, Chuang
+elastic_constant_C11 			= 83.3e9	# Vurgaftman, Chuang
+elastic_constant_C12 			= 45.3e9	# Vurgaftman, Chuang
+elastic_constant_C44 			= 39.6e9	# Vurgaftman, Chuang
+
+
+#####################################################
+# MOBILITY, DIELECTRIC CONSTANT
+#####################################################
+
+static_dielectric_constant 		= 15.1 		# ioffe.ru, Chuang: 15.15. was 14.55 (Dessis?)
+
+electron_mobility 				= 2.26 		# m2/Vs, =22600cm2/Vs
+hole_mobility 					= 0.025		# m2/Vs, =  250cm2/Vs
+
+# Arora mobility model
+# from Piprek
+mobility_arora_Amin_e			= 0.1000	# [m2/Vs]
+mobility_arora_alphamin_e		= 0.0
+mobility_arora_Ad_e				= 3.3000	# [m2/Vs]
+mobility_arora_alphad_e			= -1.57
+mobility_arora_AN_e				= 11e23		# [m-3]
+mobility_arora_alphaN_e			= -3.0
+mobility_arora_Aa_e				= 0.32
+mobility_arora_alphaa_e			= 0.0
+mobility_arora_Amin_h			= 0.0020	# [m2/Vs]
+mobility_arora_alphamin_h		= 0.0
+mobility_arora_Ad_h				= 0.0510	# [m2/Vs]
+mobility_arora_alphad_h			= -2.3
+mobility_arora_AN_h				= 1.1e23	# [m-3]
+mobility_arora_alphaN_h			= 0.0
+mobility_arora_Aa_h				= 0.46
+mobility_arora_alphaa_h			= 0.0
+
+#####################################################
+# RECOMBINATION-GENERATION 
+#####################################################
+
+radiative_coefficient		 	= 2e-16  	# by Hektor
+#radiative_coefficient		 	= 1.1e-16
+#srh_electron_lifetime		 	= 3e-8
+#srh_hole_lifetime			 	= 3e-6
+srh_electron_lifetime 			= 1e-9  	# by Hektor
+srh_hole_lifetime 			 	= 1e-9  	# by Hektor
+srh_electron_lifetime_wire		= 1e-10		# taumax
+srh_hole_lifetime_wire 		 	= 1e-10
+#auger_electron_coefficient 	= 2.2e-39
+auger_electron_coefficient  	= 1e-42  	# by Hektor
+#auger_hole_coefficient 		= 2.2e-39
+auger_hole_coefficient			= 1e-42  	# by Hektor
+gamma							= 1e7 		# decay rate
+
+# Overstraeten-deMan model
+# from dessis
+avalanche_overstraeten_Enull      = 4e7		# [V/m]
+avalanche_overstraeten_kTnull     = 0.02585 # [eV]
+#avalanche_overstraeten_kTnull    = 0.0001  # [eV]
+
+# Default sdevice coefficients
+#avalanche_overstraeten_alow_e    = 4.17e8	# [1/m]
+#avalanche_overstraeten_ahigh_e   = 4.17e8 	# [1/m]
+#avalanche_overstraeten_blow_e    = 2.09e8	# [V/m]
+#avalanche_overstraeten_bhigh_e   = 2.09e8	# [V/m]
+#avalanche_overstraeten_alow_h    = 2.65e8 	# [1/m]
+#avalanche_overstraeten_ahigh_h   = 2.65e8 	# [1/m]
+#avalanche_overstraeten_blow_h    = 2.79e8	# [V/m]
+#avalanche_overstraeten_bhigh_h   = 2.79e8	# [V/m]
+#avalanche_overstraeten_hbaromega = 1e3		# ?????????????? eV 
+
+# Hektor coefficients for InGaAs
+avalanche_overstraeten_alow_e    = 2.27e8	# [1/m]
+avalanche_overstraeten_ahigh_e   = 2.27e8 	# [1/m]
+avalanche_overstraeten_blow_e    = 1.13e8	# [V/m]  1.13
+avalanche_overstraeten_bhigh_e   = 1.13e8	# [V/m]
+avalanche_overstraeten_alow_h    = 3.95e8 	# [1/m]
+avalanche_overstraeten_ahigh_h   = 3.95e8 	# [1/m]
+avalanche_overstraeten_blow_h    = 1.45e8	# [V/m]  1.45
+avalanche_overstraeten_bhigh_h   = 1.45e8	# [V/m]
+avalanche_overstraeten_hbaromega = 0.035	# [eV] 
+
+# Hektor coefficients for superlattice (would be InGaAs)
+#avalanche_overstraeten_alow_e    = 1.53e9	# [1/m] 9
+#avalanche_overstraeten_ahigh_e   = 1.53e9 	# [1/m] 9
+#avalanche_overstraeten_blow_e    = 3.52e8	# [V/m]
+#avalanche_overstraeten_bhigh_e   = 3.52e8	# [V/m]
+#avalanche_overstraeten_alow_h    = 1.24e9 	# [1/m] 9
+#avalanche_overstraeten_ahigh_h   = 1.24e9 	# [1/m] 9
+#avalanche_overstraeten_blow_h    = 3.93e8	# [V/m]
+#avalanche_overstraeten_bhigh_h   = 3.93e8	# [V/m]
+#avalanche_overstraeten_hbaromega = 0.035	# [eV] 
+
+
+# obsolete params
+#intrinsic_density    			= 1.3e21  	# 300K, SI units!
+#intrinsic_density_2d 			= 1e13  	# = ni_3D * 1e-8m
+#intrinsic_density_1d 			= 1e5   	# = ni_3D * 1e-16m^2
+#radiative_coefficient_2d      	= 1.1e-8    # = B_3D / 1e-8m
+#radiative_coefficient_1d      	= 1.1e0     # = B_3D / 1e-16m^2
+#auger_electron_coefficient_2d 	= 2.2e-23   # = Cn_3D / 1e-16m^2
+#auger_electron_coefficient_1d 	= 2.2e-7    # = Cn_3D / 1e-32m^4
+#auger_hole_coefficient_2d     	= 2.2e-29   # = Cp_3D / 1e-16m^2
+#auger_hole_coefficient_1d     	= 2.2e-7    # = Cp_3D / 1e-32m^4

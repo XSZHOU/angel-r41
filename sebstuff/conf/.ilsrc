@@ -1,0 +1,43 @@
+/*set(0) {
+	iterative( bicgstab, tolrel=1e-8, tolunprec=1e-4, tolabs=0, maxit=200 );
+	preconditioning( ilut(0.01,-1), left );
+	ordering( symmetric=nd, nonsymmetric=mpsilst );
+	options( compact=yes, verbose=1 );
+};*/
+
+set(1) {
+   iterative( gmresdr(25,10), tolrel=1e-14, tolunprec=1e-14, maxit=300 ); // default tolrel=1e-8
+   deflation( off );
+   preconditioning( ilut(0.000001,-1), adaptive( lower=(1.0,0.316), upper=(2.0,0.1), mintol=1e-8 ) );
+   //preconditioning( ilut(0.0000001,-1) ); // zum testen
+   //preconditioning( ilu0 );
+   // or just skip the adaptive(...) part!
+   ordering( symmetric=nd, nonsymmetric=mpsilst);
+   options( compact=yes, verbose=0 );
+};
+
+set(2) {
+   iterative( bicgstab, tolrel=1e-12, tolunprec=0, maxit=200, smoother=1, smooth_min_n=10, mintolrel=1e-8, stagnation=10,1e-2 );
+   deflation( on );
+   preconditioning( ilut(0.001,-1), adaptive( lower=(1.0,0.316), upper=(2.0,0.1), mintol=1e-6 ) );
+   ordering( symmetric=nd, nonsymmetric=mpsilst );
+   options( compact=yes, verbose=1 );                                          
+};
+
+set(3) {
+   iterative( prec_only );   // nur pardiso
+   deflation( off );
+   preconditioning( pardiso );
+   ordering( symmetric=none, nonsymmetric=none );
+   options( compact=yes, verbose=1 );
+};
+
+set(4) {
+	iterative( test(13) ); // loest nichts, fuer test
+   deflation( off );
+   preconditioning( ilut(0.0000001,-1) ); // zum testen
+   ordering( symmetric=nd, nonsymmetric=mpsilst);
+   options( compact=yes, verbose=0 );
+};
+
+

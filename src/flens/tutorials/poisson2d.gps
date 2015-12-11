@@ -1,0 +1,4 @@
+set terminal gif
+set output "s4_somedata.gif"
+unset key
+splot "s4_somedata.dat" with lines

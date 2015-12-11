@@ -1,0 +1,22 @@
+# confdef: material_wurtzite_ternary.cnf
+#
+# Al(x)Ga(1-x)N: 
+# ===============
+# property A is found by 
+#
+#     x*A(AlN) + (1-x)*A(GaN) - x*(1-x)*A_x2
+#
+# only A_x2 is found here (if nonzero)
+#
+# RULE 1: include a definition file via "# confdef:" on the first line
+# RULE 2: do not put a ";" or something else at the end
+# RULE 3: everything behind a # is neglected (except # tdkpconfdef)
+#
+# References:
+# Vurgaftman: Vurgaftman and Meyer, in "Nitride Semiconductors: Principles and Simulation", ed. Piprek, Wiley, 2007
+# Vurgaftman 2003: Vurgaftman and Meyer, J.Appl.Phys. 94, 36?? (2003)
+# Adachi: S. Adachi, Properties of Group II-V and II-VI Semiconductors, Wiley, 2005
+# Piprek 2005: Optoelectronic Devices: Adv. Sim. and Analysis, ed. Piprek, Springer, 2005
+
+valence_band_edge_x2 =  0.00	# [eV] Vurgaftman; Piprek 2003: 30% of bandgap bowing
+bandgap_bowing		 =  0.80 # [eV] Vurgaftman; Piprek 2005: 0.7, Piprek 2003: 1.3

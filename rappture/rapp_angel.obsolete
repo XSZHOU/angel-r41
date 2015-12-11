@@ -1,0 +1,147 @@
+
+// read some (x,E)-data from a file (simulation output)
+// data array has nE rows, nx columns
+void read_xE_data(const char * filename, 
+				vector<double> & x, 
+				vector<double> & E, 
+				vector< vector<double> > & data)
+{
+	outfile << "Reading " << filename << "...";
+	x.clear();
+	E.clear();	
+	data.clear();
+    const char EOL = '\n';
+
+	ifstream fin;
+	fin.open(filename);
+	ASSERT(fin);
+	char buf[1000];
+	
+	// first 2 lines are comments
+	fin.getline(buf, 1000);
+	fin.getline(buf, 1000);
+
+	double tmp;
+	// next line contains x-coordinates
+	while ( fin.peek()!=EOL){ fin >> tmp; x.push_back(tmp); }
+	
+	vector<double> vec(x.size());
+	while (!fin.eof()) {
+		// first column contains energy value
+		fin >> tmp; E.push_back(tmp);
+		
+		// remaining columns contain data values
+		for (uint ii=1; ii<x.size(); ii++) {
+			fin >> vec[ii];
+		}
+		data.push_back(vec);
+	}
+	outfile << " done.\n";
+}
+
+
+
+
+
+int main {
+
+
+
+	vector<double> x;
+	vector<double> E;
+	vector< vector<double> > data;
+	
+	char filename[1000];
+	sprintf(filename,"../results/nanohub/nanohub_Source%0.3fV_nE");
+	outfile << "nE: " << filename << endl;
+	read_xE_data(filename, x, E, data);
+	
+	/*outfile << "x="; for (uint ii=0; ii<x.size(); ii++) outfile << x[ii] << " ";
+	outfile << "\nE="; for (uint ii=0; ii<E.size(); ii++) outfile << E[ii] << " ";
+	outfile << "\nn(x,E)=\n"; 
+	for (uint ii=0; ii<data.size(); ii++) {
+		for (uint jj=0; jj<data[ii].size(); jj++) {
+			 outfile << data[ii][jj] << " ";
+	    }
+		outfile << "\n";
+	}*/
+	
+	uint nx = /*x.size()*/ 3;
+	uint nE = /*E.size()*/ 3; 
+	outfile << "nx=" << nx << ", nE=" << nE << endl;
+	
+	// --------
+	// MESH
+	// --------
+	outfile << "Setting up mesh..." << endl;
+	bool save_elements = false;
+	// ordering: (x[jj],E[ii]) is point ii*nx+jj
+	stringstream mesh;
+	char buf1[200];
+	char buf2[200];
+	uint num_points = 0;
+	uint num_elems = 0;
+	for (uint ii=0; ii<nE; ii++) {
+		for (uint jj=0; jj<nx; jj++) {
+			outfile << "ii=" << ii << ",jj=" << jj << "  ";
+			mesh << E[ii] << " " << x[jj] << "\n";
+			
+			if (save_elements) {
+				// generate <node>
+				sprintf(buf1,"output.cloud(xEmesh).node(%d)", num_points);
+				sprintf(buf2,"%g %g", E[ii], x[jj]);
+				ASSERT(0==rpPutString(lib,buf1,buf2,0));
+				
+				// generate <element>
+				if (ii!=nE-1 && jj!=nx-1) {
+					sprintf(buf1,"output.cloud(xEmesh).element(%d).nodes", num_elems);
+					sprintf(buf2,"%d %d %d %d", 
+						num_points,
+						num_points+1,
+						num_points+nx,
+						num_points+nx+1);
+					ASSERT(0==rpPutString(lib,buf1,buf2,0));
+					
+					num_elems++;
+				}
+			}
+			
+			num_points++;				
+		}
+	}
+	ASSERT(num_points==nx*nE);
+	outfile << "mesh:\n " << mesh << endl;
+	
+	if (!save_elements) {
+		ASSERT(0==rpPutString(lib,"output.cloud(xEmesh).points",mesh.str().c_str(),0));
+	}
+		
+	// --------
+	// n(x,E)
+	// --------
+	outfile << "Storing n(x,E)...\n";
+	stringstream n_x_E;
+	//ASSERT(data.size()==nE);
+	num_points=0;
+	for (uint ii=0; ii<nE; ii++) {
+		//ASSERT(data[ii].size()==nx);
+		for (uint jj=0; jj<nx; jj++) {
+			n_x_E << data[ii][jj] << "\n";
+			num_points++;
+		}
+	}
+	ASSERT(num_points==nx*nE);
+	outfile << "n(x,E):\n " << n_x_E << endl;
+	
+	ASSERT(0==rpPutString(lib,"output.field(n_x_E).component.values",
+		n_x_E.str().c_str(),0));
+		
+	ASSERT(0==rpPutString(lib,"output.field(n_x_E).component.mesh","output.cloud(xEmesh)",0));
+
+
+	// --------
+	// LDOS(x,E)
+	// --------
+
+
+}

@@ -1,0 +1,26 @@
+logfile: ../results/try.log
+Creating ~/Desktop/angel-r41/
+Creating ~/Desktop/angel-r41/results/pn/ for output
+SZ (p0), 
+|====================================================================|
+|**********                                                **********|
+|*        *** Welcome to ANGEL (A NEGF solver for LEDs) ***         *|
+|**********                                                **********|
+|====================================================================|
+Materials directory : ~/Desktop/angel-r41/materials/
+Simulation directory: ./
+|--------------------------------------------------------------------|
+|                          reading options                           |
+|--------------------------------------------------------------------|
+File: ./pn.cmd
+Cannot open or find property definition file ~/Desktop/angel-r41/materials/~/Desktop/angel-r41/materials//cmd.cnf (1).
+
+Set NEGF_MATERIAL_CNFPATH to point to the configuration directory
+Exception near line 304, function init_from_file
+    in file io/PropertyContainer.h, compiled Dec 11 2015 10:02:40
+Exception near line 125, function read_cmd_file
+    in file io/InputParser.cpp, compiled Dec 11 2015 10:02:40
+Exception near line 76, function Options
+    in file io/Options.cpp, compiled Dec 11 2015 10:02:47
+terminating
+

@@ -1,0 +1,174 @@
+# confdef: material_zincblende.cnf
+# simple zincblende material definition ....
+#
+# RULE 1: include a definition file via "# confdef:" on the first line
+# RULE 2: do not put a ";" or something else at the end
+# RULE 3: everything behind a # is neglected (except # tdkpconfdef)
+#
+# References:
+# Chuang: S.L.Chuang, Physics of Optoelectronic Devices, Wiley, 1995
+# Dessis
+# Vurgaftman: Vurgaftman, Meyer and Ram-Mohan, J.Appl.Phys. 89, 5815 (2001)
+# Adachi: S. Adachi, Properties of Group II-V and II-VI Semiconductors, Wiley, 2005
+# Soonckindt: soonckindt et al., Surf. Sci. Lett. 130, L337 (1983)
+# Piprek: J. Piprek, Semiconductor Optoelectronic Devices, Associated Press (2003)
+# Neamen: D. Neamen, Sc Physics and Devices, McGraw-Hill, 2003 (3rd ed.)
+# Sootodeh: Sootodeh et al., J. Appl. Phys. 87, 2890 (2000)
+
+#####################################################
+# BAND PARAMETERS
+#####################################################
+# note: the posititon of the CB edge is not just given by the
+# electron affinity, as can be seen by comparing electron affinities 
+# from Adachi for GaAs and AlAs (4.15-3.5=0.65) with the CB offset given
+# in Vurgaftman (0.66*0.53/0.34=1.03) !!!
+
+bandgap_0K         				=  1.519    # [eV] Vurgaftman
+#bandgap_300K	   				=  1.4225   # [eV] could be deduced from alpha,beta, Eg(0) Chuang: 1.424
+bandgap_alpha      				=  5.405e-4 # [eV/K] Vurgaftman
+bandgap_beta       				=  204      # [K]  Vurgaftman
+#electron_affinity  			=  4.11826  # [eV] Dessis. ioffe.ru: 4.07, Adachi: 4.15
+valence_band_edge				= 0.0		# [eV] arbitrary, taken to be -5.67 -4.15-1.52 = Ec(0K)-Eg(0K); THIS MARKS THE ENERGY ZERO OF ALL MATERIALS!
+#conduction_band_edge_T 		= -1.7e-4	# Adachi / Soonckindt
+
+electron_effective_mass     	= 0.067  	# Vurgaftman, Chuang, Adachi, Neamen
+#electron_effective_mass     	= 0.1 	
+hole_effective_mass				= 0.50 		# Chuang, effective DOS mass (HH), was 0.4809; Neamen: 0.48; Piprek (HH+LH): 0.520
+#hole_effective_mass    			= 0.2
+
+luttinger_parameter_1  			= 6.89 		# Vurgaftman, Chuang: 6.85
+luttinger_parameter_2  			= 2.06 		# Vurgaftman, Chuang: 2.1
+luttinger_parameter_3  			= 2.93 		# Vurgaftman, Chuang: 2.93
+optical_matrix_element 			= 18.0		# [eV] selber, Chuang: 25.7, Vurgaftman: 28.8
+spin_orbit_splitting   			= 0.341		# Vurgaftman, Chuang: 0.33
+
+strain_potential_ac  			= -7.17		# Vurgaftman and Chuang
+strain_potential_av  			=  1.16		# Chuang, Vurgaftman: minus sign. here a = ac-av
+strain_potential_b   			= -2.0		# Vurgaftman, Chuang: -1.7
+strain_potential_d   			= -4.8		# Vurgaftman, Chuang: -4.55
+
+lattice_constant     			= 5.6533 	# [Angstrom] 300K, Chuang, Vurgaftman
+elastic_constant_C11 			= 1221e9	# [Pa] Vurgaftman, Chuang: 1188e9
+elastic_constant_C12 			=  566e9	# [Pa] Vurgaftman, Chuang:  538e9
+elastic_constant_C44 			=  600e9	# [Pa] Vurgaftman, Chuang:  594e9
+
+
+#####################################################
+# MOBILITY, DIELECTRIC CONSTANT, DOPING
+#####################################################
+
+static_dielectric_constant 		= 12.90  	# 300K, Handbook on Sc Params & ioffe.ru & Piprek; Chuang,Adachi '85: 13.1
+optic_dielectric_constant 		= 10.89  	# 300K, ioffe.ru 
+static_dielectric_constant_T	= 1.58e-3	# [1/K] deps/dT, Adachi
+
+donor_ionization_energy 		= 0.0058	# [eV] Si, Neamen, Sze
+donor_degeneracy 				= 2			# I guess
+acceptor_ionization_energy 		= 0.0307	# [eV] Zn, Neamen, Sze, Heilman
+#acceptor_ionization_energy 	= 0.0267	# [eV] C, Neamen, Heilman
+acceptor_degeneracy 			= 2			# I guess
+
+#electron_mobility 				= 0.50 		# [m2/Vs], =8500cm2/Vs, Dessis
+#hole_mobility     				= 0.03		# [m2/Vs], = 400cm2/Vs, Dessis
+electron_mobility 				= 0.934		# [m2/Vs] 300K, Adachi; Piprek: 0.94
+hole_mobility     				= 0.045		# [m2/Vs] 300K, Adachi; Piprek: 0.05
+
+# Arora mobility model
+# from Dessis
+#mobility_arora_Amin_e			= 0.2136	# [m2/Vs]
+#mobility_arora_alphamin_e		= -0.7457
+#mobility_arora_Ad_e			= 0.6331	# [m2/Vs]
+#mobility_arora_alphad_e		= -2.687
+#mobility_arora_AN_e			= 7.345e22	# [m-3]
+#mobility_arora_alphaN_e		= 3.535
+#mobility_arora_Aa_e			= 0.6273
+#mobility_arora_alphaa_e		= -0.1441
+#mobility_arora_Amin_h			= 0.002148	# [m2/Vs]
+#mobility_arora_alphamin_h		= -1.124
+#mobility_arora_Ad_h			= 0.03312	# [m2/Vs]
+#mobility_arora_alphad_h		= -2.366
+#mobility_arora_AN_h			= 5.136e23	# [m-3]
+#mobility_arora_alphaN_h		= 3.69
+#mobility_arora_Aa_h			= 0.8057
+#mobility_arora_alphaa_h		= 0.0
+
+# Arora mobility model
+# from Piprek / Sootodeh
+mobility_arora_Amin_e			= 0.0500	# [m2/Vs]
+#mobility_arora_Amin_e			= 0.0050	# [m2/Vs]
+mobility_arora_alphamin_e		= 0.0
+mobility_arora_Ad_e 			= 0.8900	# [m2/Vs]
+#mobility_arora_Ad_e 			= 0.0890	# [m2/Vs]
+mobility_arora_alphad_e 		= -2.1
+mobility_arora_AN_e 			= 0.6e23	# [m-3]
+mobility_arora_alphaN_e 		= +3.0
+mobility_arora_Aa_e 			= 0.394
+mobility_arora_alphaa_e 		= 0.0
+mobility_arora_Amin_h 			= 0.0020	# [m2/Vs]
+#mobility_arora_Amin_h 			= 0.0002	# [m2/Vs]
+mobility_arora_alphamin_h		= 0.0
+mobility_arora_Ad_h 			= 0.0471	# [m2/Vs]
+#mobility_arora_Ad_h 			= 0.0047	# [m2/Vs]
+mobility_arora_alphad_h 		= -2.2
+mobility_arora_AN_h 			= 1.48e23	# [m-3]
+mobility_arora_alphaN_h 		= +3.0
+mobility_arora_Aa_h 			= 0.38
+mobility_arora_alphaa_h 		= 0.0
+
+
+#####################################################
+# RECOMBINATION-GENERATION
+#####################################################
+
+radiative_coefficient         = 7.2e-16
+srh_electron_lifetime         = 1e-9	# taumax; literature would be 5e-9
+srh_hole_lifetime             = 1e-9	# taumax; literature would be 3e-6
+srh_taumin                    = 0.0
+srh_Nref                      = 1e22 	# m-3; for doping dependence
+srh_Talpha                    = -1.5 	# for temperature dependence (<=0)
+srh_gamma                     = 1.0  	# for doping dependence
+auger_electron_coefficient    = 1e-42
+auger_hole_coefficient        = 1e-42
+gamma						  = 1e-10 	# decay rate
+
+# Overstraeten-deMan avalanche generation model
+# from Dessis
+avalanche_overstraeten_Enull     = 4.00e7	# [V/m]
+avalanche_overstraeten_alow_e    = 2.27e8	# [1/m]
+avalanche_overstraeten_ahigh_e   = 2.27e8	# [1/m]
+avalanche_overstraeten_blow_e    = 1.13e8	# [V/m]
+avalanche_overstraeten_bhigh_e   = 1.13e8	# [V/m]
+avalanche_overstraeten_alow_h    = 3.95e8	# [1/m]
+avalanche_overstraeten_ahigh_h   = 3.95e8	# [1/m]
+avalanche_overstraeten_blow_h    = 1.45e8	# [V/m]
+avalanche_overstraeten_bhigh_h   = 1.45e8	# [V/m]
+avalanche_overstraeten_hbaromega = 0.035	# [eV]
+avalanche_overstraeten_kTnull    = 0.02585  # [eV]
+#avalanche_overstraeten_kTnull    = 0.0001  # [eV]
+
+# obsolete quantities
+# intrinsic_density    = 2e12  # SI units!
+#radiative_coefficient_2d      = 7.2e-8    # = B_3D / 1e-8m
+#radiative_coefficient_1d      = 7.2e-0    # = B_3D / 1e-16m^2
+#auger_electron_coefficient_2d = 1e-26     # = Cn_3D / 1e-16m^2
+#auger_electron_coefficient_1d = 1e-10     # = Cn_3D / 1e-32m^4
+#auger_hole_coefficient_2d     = 1e-26     # = Cp_3D / 1e-16m^2
+#auger_hole_coefficient_1d     = 1e-10     # = Cp_3D / 1e-32m^4
+#intrinsic_density_2d = 2e4   # = ni_3D * 1e-8m, needed for BndCond
+#intrinsic_density_1d = 2e-4  # = ni_3D * 1e-16m^2, needed for BndCond
+
+
+#####################################################
+# OTHER PARAMETERS
+#####################################################
+
+# optical phonon scattering
+LO_phonon_energy 			= 0.0353 	# [eV] Adachi, 300K; Lundstrom p.114
+#LO_phonon_energy 			= 1e-8 	    # [eV] testing
+#LO_phonon_energy 			= 0.035 	# [eV] testing
+TO_phonon_energy 			= 0.0331 	# [eV] Adachi, 300K
+
+# acoustic phonon scattering
+mass_density                             = 5360.0 # [kg m-3] Lundstrom, p.114; Adachi: 5310
+longitudinal_acoustic_velocity           = 5240.0 # [m/s] Lundstrom, p.114
+electron_acoustic_deformation_potential  = 7.01   # [eV] Lundstrom, p.114; Adachi: 11.0
+hole_acoustic_deformation_potential      = 3.5    # [eV] Lundstrom, p.114

@@ -1,0 +1,5 @@
+0. use the kubantu version make.inc
+1. build umfpack library ->  notice we have to change the build_shared file
+2. build flens   library ->  change the makefile in /flens/flens,g++ instead of c++
+3. build angle    binary ->  change make.inc file
+4. modify MPI.h/MPI.cpp  ->  MPIs.h/MPIs.cpp, possible conflicts with <mpi.h> 
