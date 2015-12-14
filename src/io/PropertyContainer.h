@@ -512,8 +512,10 @@ bool PropertyContainer<T>::valid_key(const char* key) const throw(Exception *){
 
 template<class T>
 bool PropertyContainer<T>::valid_key(const string& key) const throw(Exception *){
-	this->check_proper_initialization();	
-	if(this->valid_properties.find(key) == this->valid_properties.end()) {
+	this->check_proper_initialization();
+    //
+    if(this->valid_properties.find(key) == this->valid_properties.end()) {
+        //given key exists in the map? not found
 		return false;	
 	} else {
 		return true;	
@@ -564,7 +566,7 @@ T PropertyContainer<T>::get(const string& key) const throw(Exception*)
 	this->check_proper_initialization();
 	
 	if(!this->is_set(key)) {
-		NEGF_FEXCEPTION("%s: value for \"%s\" is not available", this->name.c_str(), key.c_str());	
+		NEGF_FEXCEPTION("%s: value for \"%s\" is not available", this->name.c_str(), key.c_str());
 	}
 	map_sT_cit cit = this->value_map.find(key);
 	NEGF_ASSERT(cit!=value_map.end(), "key not found.");
@@ -580,14 +582,16 @@ T PropertyContainer<T>::get(const string& key) const throw(Exception*)
 template<class T>
 void PropertyContainer<T>::set(const char* key, T value) throw(Exception*) {
 	string tmp(key);
-	this->set(tmp, value);	
+    this->set(tmp, value);
 }
 
 template<class T>
 void PropertyContainer<T>::set(const string& key, T value) throw(Exception*) {
-	this->check_proper_initialization();	
+    std::cout<<"Here we gogo !"<<(this->valid_key(key))<<std::endl;
+	this->check_proper_initialization();
+    //*{    S.Z.
 	if(!this->valid_key(key)) {
-		NEGF_FEXCEPTION("invalid key \"%s\"", key.c_str());	
+		NEGF_FEXCEPTION("invalid key \"%s\"", key.c_str());
 	}
 	if(!this->valid_properties[key].inside_error_bounds(value)) {
 		NEGF_FEXCEPTION("value for \"%s\" is outside error bounds", key.c_str());			
@@ -595,6 +599,7 @@ void PropertyContainer<T>::set(const string& key, T value) throw(Exception*) {
 	if(!this->valid_properties[key].inside_warn_bounds(value)) {			
 		logmsg->emit(LOG_WARN, "value for \"%s\" is out of usual bounds", key.c_str()); 			
 	}
+    //}*/
 	this->value_map[key] = value;
 }
 

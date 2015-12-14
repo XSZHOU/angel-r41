@@ -2,4 +2,8 @@
 1. build umfpack library ->  notice we have to change the build_shared file
 2. build flens   library ->  change the makefile in /flens/flens,g++ instead of c++
 3. build angle    binary ->  change make.inc file
-4. modify MPI.h/MPI.cpp  ->  MPIs.h/MPIs.cpp, possible conflicts with <mpi.h> 
+4. modify MPI.h/MPI.cpp  ->  MPIs.h/MPIs.cpp, possible conflicts with <mpi.h> -> change makefile
+                             also change include ¡°MPI.h¡± -> include ¡°MPIs.h in all.h
+                             also change include ¡°mpi.h¡± -> include <mpi.h> in MPIs.h
+5. definition of NEGF_VAR in make.inc-> later used in makefile for compiler flag
+                             change base_path to /Users/seanzhou/Documents/angel-r41

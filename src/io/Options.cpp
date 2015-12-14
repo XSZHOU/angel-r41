@@ -17,8 +17,11 @@ Options::Options() throw (Exception *)
 	logmsg->emit_header("reading options");
 	logmsg->emit(LOG_INFO,"File: %s.cmd",fnames->get_filename().c_str());
 	InputParser parser;
+    //read_cmd_file, here problems !!!(S.Z. first try)
 	this->sim = parser.read_cmd_file(fnames->get_filename());
+             
 	bool found = false;
+    
 	for (map<string, PropertyContainer<double> * >::iterator it = sim.begin(); it != sim.end(); ++it)
 	{
 		string::size_type loc = it->first.find(constants::options_name);
@@ -41,6 +44,7 @@ Options::Options() throw (Exception *)
 	// -------------------------	
 	uint dofs = 0;
 	double kpmethod = this->get("kp_method");
+             std::cout<<"kpmethod Get !"<<kpmethod<<std::endl;
 	if (fabs(kpmethod - 8.0) < 1e-14) {			// zincblende 8x8
 		dofs = 8; 
 	} else if (fabs(kpmethod - 6.0) < 1e-14) { 	// zincblende 6x6

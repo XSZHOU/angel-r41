@@ -1,6 +1,5 @@
 options {
-
-	temperature                   = 300
+        temperature=300
 	
 	kp_method                     = 3
 	
@@ -54,7 +53,7 @@ options {
 	ScatteringDecreaseFactor    = 0.01	# S(0) = (this)*S(end)
 	ScatteringRampFactor        = 4.0	# S(i) * (this)*S(i-1)
 	SelfEnergyUnderrelaxation   = 0.0	# S_new = (factor)*S_old + (1-factor)*S_new
-	
+
 	Buettiker                   = 0
 	BuettikerParameter          = 0.01 # [eV]
 	
@@ -79,9 +78,7 @@ options {
 #	LuminescenceRefinementWidth = 0.1	
 #	DeltaEgapHWmin              = 0.05
 #	DeltaEgapHWmax              = 0.45
-	
 }
-
 
 # -----------------------
 # Voltage ramping

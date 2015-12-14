@@ -139,8 +139,9 @@ int main(int argc, char* argv[])
 	logmsg->emit(LOG_INFO,"Simulation directory: %s", fnames->get_filedirectory().c_str());
 		
 	// read in options (bandstructure model, which scattiering is included, how many E- and k-points)
+    std::cout<<"Initiate option reading !!!"<<std::endl;
 	Options * options = new Options();
-	
+	std::cout<<"Option reading initialated !!!"<<std::endl;
 	// create energies. this also stores which energy is stored in which MPI process
 	Energies * energies = new Energies(options);
 	

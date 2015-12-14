@@ -49,6 +49,7 @@ map< string, PropertyContainer<double> * >  InputParser::read_cmd_file(string fi
 		map< string, PropertyContainer<double> * > sim;
 		return sim;	
 	}
+             
 	string str_in;
 	string str_stripped;
 	string::size_type loc, loc2;
@@ -56,10 +57,9 @@ map< string, PropertyContainer<double> * >  InputParser::read_cmd_file(string fi
 	string::iterator it;
 	
 	logmsg->emit(LOG_INFO_L2,  "reading data from file %s", filename.c_str());
-	
 	map< string, PropertyContainer<double> * > sim_props;
 	// contains PropertyContainers for the parameters as well as for the experiments
-
+    	
 	string reffile(fnames->get_materialdirectory()); reffile.append("/cmd.cnf");
 	logmsg->emit(LOG_INFO_L2,  "definition-file for identifier properties is %s).",reffile.c_str());
 	
@@ -114,11 +114,16 @@ map< string, PropertyContainer<double> * >  InputParser::read_cmd_file(string fi
 				logmsg->emit(LOG_ERROR,"in file %s: could not parse argument '%s'", filename.c_str(), item.c_str());
 				NEGF_EXCEPTION("Parsing error, aborting. Must be double.");
 			}
-			
+            //std::cout<<regname<<std::endl;  //"options"
+            //std::cout<<property<<std::endl; //"temperature"
+            //std::cout<<value<<std::endl;    // 300
+            // troubles here !
 			sim_props[regname]->set(property, value);
+            
 		}
-
+        
 	} // end while
+    
 	fin.close();
 
 	return sim_props;

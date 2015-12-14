@@ -5,7 +5,7 @@
 # external include directories and libraries
 # ============================================================
 
-BASE_PATH    = ~/Desktop/angel-r41
+BASE_PATH    = /Users/seanzhou/Documents/angel-r41
 LIB_PATH     = $(BASE_PATH)/lib
 
 DEF_LIB      = 
@@ -44,7 +44,7 @@ PYTHON_H     = $(PYTHONPATH)/include/python2.5
 RAPP_INC     = -I /home/steiger/src/rappture/20090818/include
 RAPP_LIB     = -Bdynamic -Wl,-rpath,/home/steiger/src/rappture/20090818/lib -L /home/steiger/src/rappture/20090818/lib -lrappture
 
-NEGF_VAR     = $(BASE_PATH)/
+NEGF_VAR     = $(BASE_PATH)
 
 # ============================================================
 # compiler settings
