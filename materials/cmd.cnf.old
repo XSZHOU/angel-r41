@@ -2,5 +2,6 @@
 # property container for zincblende material
 #
 
+temperature;mandatory;1.0e0; 12.0; 0.01; 400;
 electron_effective_mass;mandatory;1.0e-10; 12.0; 0.001; 0.99;
 conduction_band_edge;mandatory;-1.0e-18;8.e30;0.8;2.0;

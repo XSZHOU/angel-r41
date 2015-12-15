@@ -610,7 +610,7 @@ void PropertyContainer<T>::set(const string& key, T value) throw(Exception*) {
  * matrices. (so interaction matrices are build only once for each material)
  */ 
 template<class T>
-void PropertyContainer<T>::set_id(unsigned int id_) 
+void PropertyContainer<T>::set_id(unsigned int id_)
 { 
 	this->id = id_; 
 }

@@ -1,0 +1,4 @@
+% NEGF matrix 1x5
+% Voltage [V], Jleft (SLGG-SGGL) [A/cm2], Jright (SLGG-SGGL) [A/cm2], Jleft (HG-GH) [A/cm2], Jright (HG-GH) [A/cm2]
+               0.8	 0.000914735460539	 1.39855120599e-05	 0.000362149364802	-1.39951633267e-05
+
