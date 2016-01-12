@@ -7,3 +7,9 @@
                              also change include ¡°mpi.h¡± -> include <mpi.h> in MPIs.h
 5. definition of NEGF_VAR in make.inc-> later used in makefile for compiler flag
                              change base_path to /Users/seanzhou/Documents/angel-r41
+
+
+run:
+
+cd bin/
+mpirun -np 2 ./angel.bin pn ../results/try.log

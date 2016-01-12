@@ -66,7 +66,6 @@ fitness for a particular purpose. See also <http://www.gnu.org/licenses/>.
 
 using namespace negf;
 
-
 int main(int argc, char* argv[])
 {
 	try {
@@ -139,7 +138,6 @@ int main(int argc, char* argv[])
 	logmsg->emit(LOG_INFO,"Simulation directory: %s", fnames->get_filedirectory().c_str());
 		
 	// read in options (bandstructure model, which scattiering is included, how many E- and k-points)
-    std::cout<<"Initiate option reading !!!"<<std::endl;
 	Options * options = new Options();
 	std::cout<<"Option reading initialated !!!"<<std::endl;
 	// create energies. this also stores which energy is stored in which MPI process
@@ -160,7 +158,7 @@ int main(int argc, char* argv[])
 	material->add_search_path(fnames->get_filedirectory().c_str());
 	for (uint ii=0; ii<xspace->get_num_regions(); ii++) {
 		Region * reg = xspace->get_region(ii);
-        string mat_name = reg->get_material_name();
+                string mat_name = reg->get_material_name();
 		logmsg->emit(LOG_INFO,"Region %s (material=%s)...",reg->get_name().c_str(), mat_name.c_str());
 
 		if (reg->has_molefraction()) {
