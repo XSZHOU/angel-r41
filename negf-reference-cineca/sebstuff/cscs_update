@@ -1,0 +1,19 @@
+#!/bin/bash
+echo "copying conf/, materials/, scripts/, src/, structures/, definitions.negf, negf.i, Makefile.palu.* from grossglockner.ee.ethz.ch to here!"
+IISDIR="/home/steiger/src/release/amd64/NEGF"
+echo "$IISDIR/conf"
+scp -r steiger@grossglockner.ee.ethz.ch:$IISDIR/conf .
+scp -r steiger@grossglockner.ee.ethz.ch:$IISDIR/materials .
+scp -r steiger@grossglockner.ee.ethz.ch:$IISDIR/scripts .
+scp -r steiger@grossglockner.ee.ethz.ch:$IISDIR/src .
+scp -r steiger@grossglockner.ee.ethz.ch:$IISDIR/structures .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/definitions.negf .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/negf.i .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/Makefile.palu.gnu .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/Makefile.palu.pgi .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/Makefile.blanc.gnu .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/Makefile.rosa.gnu .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/README.cscs .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/cscs_update .
+scp    steiger@grossglockner.ee.ethz.ch:$IISDIR/cscs_prepare .
+# further files: palu_job, blanc_job

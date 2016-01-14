@@ -1,0 +1,111 @@
+# 
+# property container for amorphous material
+# syntax:<name>;{optional,mandatory};min_error;max_error;min_warning;max_warning;default;
+# if value lies outside error boundary, an error is issued
+# if value lies outside warning boundary, a warning is issued
+#
+
+#####################################################
+# BAND PARAMETERS
+#####################################################
+
+electron_effective_mass;optional;1e-10; 100; 0.001; 20;
+
+hole_effective_mass;optional;1e-10;30;0.005;20;
+hole_effective_mass_z;optional;1e-10;30;0.005;20;
+hole_effective_mass_tr;optional;1e-10;50;0.001;20;
+
+conduction_band_edge;optional;-20;50;-1;20;
+valence_band_edge;optional;-100;1;-20;0;
+
+bandgap;optional;1e-10;100;0.1;20;
+bandgap_0K;optional;1e-10;100;0.1;20;
+bandgap_300K;optional;1e-10;100;0.1;20;
+electron_affinity;optional;0;100;0;10;
+bandgap_alpha;optional;-1e100;1e100;-1e99;1e99;
+bandgap_beta;optional;-1e100;1e100;-1e99;1e99;
+
+strain_potential_ac;optional;-100.0;100.0;-20.0;0.0;
+strain_potential_av;optional;-100.0;100.0;0.0;6.0;
+strain_potential_b;optional;-100.0;100.0;-10.0;0.0;
+strain_potential_d;optional;-100.0;100.0;-10.0;0.0;
+
+elastic_constant_C11;optional;1e-50;1e50;1e-49;1e49;
+elastic_constant_C12;optional;1e-50;1e50;1e-49;1e49;
+elastic_constant_C44;optional;1e-50;1e50;1e-49;1e49;
+
+lattice_constant;optional;0.1;100;2.0;10;
+
+
+#####################################################
+# MOBILITY, DIELECTRIC CONSTANT, DOPING
+#####################################################
+
+static_dielectric_constant;optional;0.5;1e10;1;1e2;
+electrostatic_charge;optional;-1e20;1e20;-1e5;1e5;
+
+donor_ionization_energy;optional;-100;100;-10;10;
+donor_degeneracy;optional;0;100;0;10;
+acceptor_ionization_energy;optional;-100;100;-10;10;
+acceptor_degeneracy;optional;0;100;0;10;
+
+electron_mobility;optional;0;1e10;0;1e4;
+hole_mobility;optional;0;1e10;0;1e4;
+
+# Arora mobility model
+mobility_arora_Amin_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphamin_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_Ad_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphad_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_AN_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphaN_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_Aa_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphaa_e;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_Amin_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphamin_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_Ad_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphad_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_AN_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphaN_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_Aa_h;optional;-1e100;1e100;-1e100;1e100;
+mobility_arora_alphaa_h;optional;-1e100;1e100;-1e100;1e100;
+
+#####################################################
+# RECOMBINATION-GENERATION
+#####################################################
+
+radiative_coefficient;optional;0;1e-10;0;1e-10;
+radiative_coefficient_2d;optional;0;1e-2;0;1e-2;
+radiative_coefficient_1d;optional;0;1e6;0;1e6;
+srh_electron_lifetime;optional;0;1e99;0;1e99;
+srh_hole_lifetime;optional;0;1e99;0;1e99;
+srh_electron_lifetime_wire;optional;0;1e99;0;1e99;
+srh_hole_lifetime_wire;optional;0;1e99;0;1e99;
+srh_taumin;optional;-1e99;1e99;-1e99;1e99;
+srh_Nref;optional;-1e99;1e99;-1e99;1e99;
+srh_Talpha;optional;-1e99;1e99;-1e99;1e99;
+srh_gamma;optional;-1e99;1e99;-1e99;1e99;
+auger_electron_coefficient;optional;0;1e-20;0;1e-20;
+auger_electron_coefficient_2d;optional;0;1e-4;0;1e-4;
+auger_electron_coefficient_1d;optional;0;1e12;0;1e12;
+auger_hole_coefficient;optional;0;1e-20;0;1e-20;
+auger_hole_coefficient_2d;optional;0;1e-4;0;1e-4;
+auger_hole_coefficient_1d;optional;0;1e12;0;1e12;
+gamma;optional;0;1e100;0;1e10;
+
+# Overstraeten-deMan avalanche generation model
+avalanche_overstraeten_Enull;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_alow_e;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_alow_h;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_ahigh_e;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_ahigh_h;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_blow_e;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_blow_h;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_bhigh_e;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_bhigh_h;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_hbaromega;optional;-1e100;1e100;-1e100;1e100;
+avalanche_overstraeten_kTnull;optional;-1e100;1e100;-1e100;1e100;
+
+intrinsic_density;optional;1e-100;1e40;1e-100;1e30;
+intrinsic_density_2d;optional;1e-108;1e32;1e-108;1e22;
+intrinsic_density_1d;optional;1e-116;1e24;1e-116;1e14;

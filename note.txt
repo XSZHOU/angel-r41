@@ -9,7 +9,40 @@
                              change base_path to /Users/seanzhou/Documents/angel-r41
 
 
-run:
 
+Get:
+wget https://github.com/XSZHOU/negf-reference/archive/master.zip
+
+
+Compile(Cineca):
+0. clean everything
+   /src/flens:/src/flens/flens:/umfpack/UMFPACK:/umfpack/UMFPACK/Source  -> make clean 
+1. find the required libs
+module av/li/purge
+2. load them consistently
+module load autoload intelmpi/5.0.2--binary
+module load autoload boost/1.58.0--intelmpi--5.0.2--binary
+module load autoload mkl/11.2--binary
+module load autoload fftw/2.1.5--intelmpi--5.0.2--binary
+#use fftw3
+module unload fftw/2.1.5--intelmpi--5.0.2--binary
+module load autoload fftw/3.3.4--intelmpi--5.0.2--binary 
+
+3. identify the corresponding ¡°INC¡± & ¡°LIB¡±
+by trying, e.g., echo ${BOOST_INC}, echo ${FFTW_LIB}
+
+4. change config files
+e.g. /src/umfpack/UFconfig/UFconfig.mk.kubuntu
+     -> LIB = -L${MKL_LIB} -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential -lpthread -lm
+
+5. -lmkl_intel_ilp64 -> -lmkl_intel_lp64, look at reasons at the following site:
+    https://software.intel.com/en-us/forums/intel-math-kernel-library/topic/293399
+
+6. change makefile
+e.g. change /src/make.inc -> use ¡°-DMKL¡± to indicate ¡°include<mkl_cblas.h>¡± in bias.h
+e.g. add -fPIC option in UFconfig.mk
+
+
+Run:
 cd bin/
 mpirun -np 2 ./angel.bin pn ../results/try.log

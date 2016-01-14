@@ -1,0 +1,166 @@
+# confdef: material_wurtzite.cnf
+#
+# RULE 1: include a definition file via "# confdef:" on the first line
+# RULE 2: do not put a ";" or something else at the end
+# RULE 3: everything behind a # is neglected (except # tdkpconfdef)
+#
+# References:
+# Vurgaftman: Vurgaftman and Meyer, in "Nitride Semiconductors: Principles and Simulation", ed. Piprek, Wiley, 2007
+# Vurgaftman 2003: Vurgaftman and Meyer, J.Appl.Phys. 94, 36?? (2003)
+# Adachi: S. Adachi, Properties of Group II-V and II-VI Semiconductors, Wiley, 2005
+# Piprek 2005: Optoelectronic Devices: Adv. Sim. and Analysis, ed. Piprek, Springer, 2005
+# Bellotti: Bellotti and Bertazzi, in "Nitride Semiconductors: Principles and Simulation", ed. Piprek, Wiley, 2007
+
+#####################################################
+# BAND PARAMETERS
+#####################################################
+
+bandgap_0K						= 6.10		# [eV] Vurgaftman
+bandgap_alpha       			= 26.3e-4	# [eV/K] Vurgaftman
+bandgap_beta        			= 2082 		# [K] Vurgaftman
+#valence_band_edge				= -0.7		# [eV] =GaN-0.7; Piprek 2005: dEv/dEg=0.3
+valence_band_edge				= -0.9		# [eV] fantasy value
+
+electron_effective_mass 		= 0.31		# Vurgaftman
+#hole_effective_mass     		= 1.48576 	# GaN value
+hole_effective_mass     		= 0.3 	    # fantasy value
+
+hole_effective_mass_A1 			= -3.86		# Vurgaftman
+hole_effective_mass_A2			= -0.25		# Vurgaftman
+hole_effective_mass_A3 			=  3.58		# Vurgaftman
+hole_effective_mass_A4 			= -1.32		# Vurgaftman
+hole_effective_mass_A5 			= -1.47		# Vurgaftman
+hole_effective_mass_A6 			= -1.64		# Vurgaftman
+hole_spin_orbit_A7 				= 0 		# Vurgaftman
+optical_momentum_matrix_element_P1 = 13.6 	# [eV] Vurgaftman. don't know why this is split
+optical_momentum_matrix_element_P2 = 13.6
+spin_orbit_split_delta_1 		= -0.227 	# [eV] Vurgaftman, = delta_cr
+spin_orbit_split_delta_2 		= 0.012 	# [eV] Vurgaftman, = delta_so/3
+spin_orbit_split_delta_3 		= 0.012 	# [eV] Vurgaftman, = delta_so/3
+
+strain_potential_D1  			= -2.9 		# [eV] Vurgaftman
+strain_potential_D2  			=  4.9 		# [eV] Vurgaftman
+strain_potential_D3  			=  9.4 		# [eV] Vurgaftman
+strain_potential_D4  			= -4.0 		# [eV] Vurgaftman
+strain_potential_D5  			= -3.3 		# [eV] Vurgaftman
+strain_potential_D6  			= -2.7 		# [eV] Vurgaftman
+
+lattice_constant_a 				= 3.112 	# [A], 300K Vurgaftman
+lattice_constant_c 				= 4.982 	# [A], 300K Vurgaftman
+
+elastic_constant_C11 			= 396e9 	# [Pa] Vurgaftman
+elastic_constant_C12 			= 137e9 	# [Pa] Vurgaftman
+elastic_constant_C13 			= 108e9 	# [Pa] Vurgaftman
+elastic_constant_C33 			= 373e9 	# [Pa] Vurgaftman
+elastic_constant_C44 			= 116e9		# [Pa] Vurgaftman
+#elastic_constant_C66 			=  
+
+piezo_coefficient_e31 			= -0.533 	# [C/m2] Bernardini 
+piezo_coefficient_e33 			= 1.505 	# [C/m2] Bernardini 
+piezo_coefficient_e15 			= -0.351 	# [C/m2] Bernardini 
+
+spontaneous_polarization        = -0.0898   # [C/m2] Bernardini 
+
+# ------------------
+# zincblende GaN
+# ------------------
+luttinger_parameter_1  			=  1.92		# Vurgaftman 2003
+luttinger_parameter_2  			=  0.47		# Vurgaftman 2003
+luttinger_parameter_3  			=  0.85		# Vurgaftman 2003
+strain_potential_ac    			= -4.5 		# [eV] Vurgaftman 2003
+strain_potential_av    			=  4.9 		# [eV] Vurgaftman 2003, different sing. here a=ac-av
+strain_potential_b     			= -1.7  	# [eV] Vurgaftman 2003
+strain_potential_d     			= -5.5  	# [eV] Vurgaftman 2003
+optical_matrix_element 			= 27.1  	# [eV] Vurgaftman 2003
+spin_orbit_splitting   			=  0.019	# [eV] Vurgaftman 2003
+#elastic_constant_C11 			= 304e9 	# [Pa] Vurgaftman 2003
+#elastic_constant_C12 			= 160e9 	# [Pa] Vurgaftman 2003
+#elastic_constant_C44 			= 193e9		# [Pa] Vurgaftman 2003
+
+
+#####################################################
+# MOBILITY, PERMITTIVITY
+#####################################################
+
+static_dielectric_constant 		= 8.16 		# Adachi, estimated zincblende value; Piprek: 8.5
+static_dielectric_constant_par 	= 8.9 		# Adachi
+static_dielectric_constant_perp	= 8.3		# Adachi
+optic_dielectric_constant 	 	= 4.6 		# Adachi, mix
+optic_dielectric_constant_par 	= 4.8 		# Adachi p.219
+optic_dielectric_constant_perp	= 4.4		# Adachi p.219
+
+electron_mobility 				= 0.1245	# [m2/Vs] GaN value
+hole_mobility     				= 0.0370	# [m2/Vs] GaN value
+
+# Piprek parameters for Arora mobility model
+#mobility_arora_Amin_e			= 0.0298	# [m2/Vs]
+#mobility_arora_alphamin_e		= -1.82
+#mobility_arora_Ad_e 			= 0.0386	# [m2/Vs]
+#mobility_arora_alphad_e 		= -3.43
+#mobility_arora_AN_e 			= 1e23		# [m-3]
+#mobility_arora_alphaN_e 		= 3.78
+#mobility_arora_Aa_e 			= 1.16
+#mobility_arora_alphaa_e 		= 0.86
+# *** hole model is not given ***
+#mobility_arora_Amin_h			= 0.0370	# [m2/Vs]
+#mobility_arora_alphamin_h		= 0
+#mobility_arora_Ad_h 			= 0			# [m2/Vs]
+#mobility_arora_alphad_h 		= 0
+#mobility_arora_AN_h 			= 1e23		# [m-3]
+#mobility_arora_alphaN_h 		= 0
+#mobility_arora_Aa_h 			= 0
+#mobility_arora_alphaa_h 		= 0
+
+# Bellotti parameters for Arora mobility model, 1e8 dislocation density
+mobility_arora_Amin_e			= 0.0013	# [m2/Vs]
+mobility_arora_alphamin_e		= 1.21
+mobility_arora_Ad_e				= 0.0725	# [m2/Vs]
+mobility_arora_alphad_e			= -3.21
+mobility_arora_AN_e				= 2.25e23	# [m-3]
+mobility_arora_alphaN_e			= 7.45
+mobility_arora_Aa_e				= 0.41
+mobility_arora_alphaa_e			= -0.18
+# *** hole model is not given - GaN params taken ***
+mobility_arora_Amin_h			= 0.0		# [m2/Vs]
+mobility_arora_alphamin_h		= 0
+mobility_arora_Ad_h				= 0.0042	# [m2/Vs]
+mobility_arora_alphad_h			= -2.34
+mobility_arora_AN_h				= 197e23	# [m-3]
+mobility_arora_alphaN_h			= 0.869
+mobility_arora_Aa_h				= 0.309
+mobility_arora_alphaa_h			= -2.311
+
+
+#####################################################
+# RECOMBINATION-GENERATION PARAMETERS
+#####################################################
+
+radiative_coefficient 			= 2e-16 	# [m-3 s-1] Piprek 2005
+srh_electron_lifetime			= 1e-9  	# [s], taumax; Piprek 2005
+srh_hole_lifetime 				= 1e-9
+srh_taumin 						= 1e-9
+srh_Nref 						= 1e23  	# [m-3]; for doping dependence
+srh_Talpha 						= 0.0   	# for temperature dependence (<=0)
+srh_gamma 						= 0.0   	# for doping dependence
+auger_electron_coefficient 		= 1e-45 	# [m-6 s-1]
+auger_hole_coefficient			= 1e-45
+gamma							= 1e-10 	# [s-1] decay rate
+
+
+#####################################################
+# OTHER PARAMETERS
+#####################################################
+
+# optical phonon scattering
+LO_phonon_energy 			= 0.073 	# [eV] Adachi p.82, 300K, wurtzite 0.5(A1+E1)
+TO_phonon_energy 			= 0.112 	# [eV] Adachi, 300K
+
+# acoustic phonon scattering
+mass_density                                = 3258     # [kg m-3] Adachi p.8, wurtzite value
+longitudinal_acoustic_velocity              = 8000     # [m/s] mix of different values from Adachi p.70
+electron_acoustic_deformation_potential_D1  = -10.23   # [eV] Adachi p.176
+electron_acoustic_deformation_potential_D2  = -9.65    # [eV] Adachi p.176
+hole_acoustic_deformation_potential         = -10      # [eV] dunno what to put --> roughly same as electrons
+
+
+

@@ -1,0 +1,24 @@
+#
+# property container for gas material
+# needed for TDKP FEM Poisson solver
+#
+
+# assume gas is almost vacuum
+electrostatic_permittivity;optional;0.01;20;0.01;20;1.0;
+# assume almost no elastic response!
+elastic_constant_C11;optional;1e-50;1e50;1e-49;1e49;0.00001;
+elastic_constant_C12;optional;1e-50;1e50;1e-49;1e49;0.00001;
+elastic_constant_C13;optional;1e-50;1e50;1e-49;1e49;0.00001;
+elastic_constant_C33;optional;1e-50;1e50;1e-49;1e49;0.00001;
+elastic_constant_C44;optional;1e-50;1e50;1e-49;1e49;0.00001;
+elastic_constant_C66;optional;1e-50;1e50;1e-49;1e49;0.00001;
+
+# piezo coefficents in electron charge / nm^2
+piezo_coefficent_e31;optional;-50;50;-50;50;0.0;
+piezo_coefficent_e33;optional;-50;50;-50;50;0.0;
+piezo_coefficent_e15;optional;-50;50;-50;50;0.0;
+
+
+
+
+

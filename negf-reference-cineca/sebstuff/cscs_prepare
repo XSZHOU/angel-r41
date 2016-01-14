@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "copying conf/, materials/, structures/, job_script, run_negf.bin to /scratch/steiger"
+#cp -r --dereference ./conf /scratch/steiger/.
+#cp -r --dereference ./materials /scratch/steiger/.
+#cp -r --dereference ./structures /scratch/steiger/.
+#cp job_script /scratch/steiger/.
+#cp run_negf.bin /scratch/steiger/.
+NEGF="/users/steiger/src/master/NEGF"
+NEGFBIN="/users/steiger/src/release/gnu/NEGF/run_negf.bin"
+SCR="/scratch/steiger"
+cd $SCR
+lndir $NEGF
+ln -s $NEGFBIN 

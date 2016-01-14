@@ -1,0 +1,345 @@
+#
+# property container for general program controlling
+#
+
+####################################################
+# output controls
+####################################################
+# control how much information you get during a run
+# 1 = only errors, 2 = show warnings, 3 = informations, 4,5,6 developer output
+# [deprecated] output_level;optional;1;6;1;6;3;
+# 1 = show solver statistics (if available)
+output_eigensolver_statistics;optional;0;1;0;1;0;
+# 1 = write results (norms etc) of reorthogonalization procedure
+output_arpack_reorthogonalization;optional;0;1;0;1;0;
+# 1 = dump kp matrices to file (during primary preparation of matrices)
+output_kpmatrix_dump_to_file;optional;0;1;0;1;0;
+# 1 = dump coefficent matrices of intrinsic strain calc
+output_strain_coefficent_matrices;optional;0;1;0;1;0;
+# 1 = be extremly chatty when doing fermi level newton
+output_fermi_level_newton;optional;0;1;0;1;1;
+# 1 = write decrossing determinantes of subband combo to files
+# (decrossing_<idx>.dat, where idx is increased for every call of resort)
+output_decrossing_determinates;optional;0;1;0;1;0;
+# 1 = be extremely chatty when performing the decrossing algorithm
+output_decrossing_details;optional;0;1;0;1;0;
+# >= 0 = write lambda_cv_k (r/i), lambda_cv_k_self_consistent and whole
+# matrix equation for omega (= idx <-> value) for each transition
+# into files lambda_<counter>.dat and matrix_<counter>.dat
+output_clc_lambda_self_consistent;optional;-1;1000000;-1;100000;-1;
+# write exchange shifts into exchange_energy_<counter>.dat
+output_clc_exchange_shifts;optional;0;1;0;1;1;
+
+####################################################
+# eigenvector postprocessing controls
+####################################################
+# threshold when two vectors need to be reorthogonalized
+# arpack does not necessarily return orthogonal eigenvectors (when
+# eigenvalue is the same. therefore a reorthogonalization procedure
+# may be needed (costly!). you may define here a given threshold,
+# when such reorthogonalization is necessary
+eigenvector_reorthogonalization_threshold;optional;0;1e10;1.0e-15;1.0e-12;1.0e-14;
+
+# all eigenvectors are tested after computation if
+# conj(x)Ax/|x|^2 equals the eigenvalue. if you are sure that the
+# eigenvalues are calculated correctly, you can skip the test
+eigenvector_skip_rayleigh_quotient_testing;optional;0;1;0;1;0;
+
+# state resorting threshold
+# when resorting and in DeCross, use this threshold as max energy
+# difference between two bands to not consider them as degenerate
+state_resorting_degeneracy_delta_energy_threshold;optional;1.0e-30;1;1.0e-16;1.0e-2;1.0e-8;
+
+# subband combos where the determinate of the overlap matrix between
+# wavefunctions of two subsequent k-values is less than this value
+# will be searched for band-crossings
+state_resorting_overlap_diagonality_threshold;optional;0;1;0;1;0.25;
+# when band-crossings are searched, accept this value of the determinate
+# of the overlap matrix to be sufficent to be treated as the optimal
+# sequence ...
+state_resorting_overlap_accept_threshold;optional;0;1;0;1;0.4;
+# minimum checking threshold
+state_resorting_minimum_orthogonality_threshold;optional;0.0;1.0;0.0;1.0;1.0e-9;
+
+####################################################
+# grid / element controls                          #
+####################################################
+# when calculating element surface integrals, we project
+# element boundaries to elements of lower dimensionality,
+# thereby matching their nodes with the projected real nodes
+# this tolerance here is used to check whether a projected node
+# matches the boundary element node
+elementboundary_node_projection_tolerance;optional;0.0;1.0;1.0e-10;1.0e-5;1.0e-6;
+
+####################################################
+# assembly controls
+####################################################
+# 1 = assembly should build the 'hermitian' matrices nonsymmetric
+assembly_build_nonsymmetric_matrices;optional;0;1;0;1;1;
+
+# 1 = ignore the first order differential terms
+#assembly_ignore_first_order;optional;0;1;0;1;0;
+
+# 1 = ignore int d/di Nk Nk (should be zero anyway)
+#assembly_ignore_first_order_diagonal;optional;0;1;0;1;0;
+
+# 1 = check the resulting matrix if its really hermitian/symmetric
+assembly_check_matrix_for_symmetry;optional;0;1;0;1;0;
+assembly_check_matrix_for_symmetry_tolerance;optional;1.0e-30;10;1.0e-16;1.0e-9;1.0e-10;
+
+# 1 = write nonhermitian nodes to dat file so it may be inspected using tecplot
+assembly_track_nonhermitian_nodes;optional;0;1;0;1;0;
+
+# 1 = store matrices to files (lhs.mat,rhs.mat)
+assembly_save_matrices_to_file;optional;0;1;0;1;0;
+
+# 1 = use matrix structure cache
+assembly_use_matrix_structure_cache;optional;0;1;0;1;0;
+
+# 1 = write jacobi scaling factors into file
+assembly_write_jacobi_scaling_to_file;optional;0;1;0;1;0;
+
+# 1 = use vertex reordering via metis (reorders vertices
+# to reduce fill in of fem matrix
+assembly_reorder_vertices_via_metis;optional;0;1;0;1;1;
+
+# disable automatic energy guess for parallel eigenvalue
+# calculations
+assembly_parallel_disable_automatic_energy_guess;optional;0;1;0;1;0;
+
+# energy guess polynomial for cb Eguess(k) = a k^2 + b k + Eguess(0)
+assembly_parallel_energy_guess_cb_poly_coeff_a;optional;-10;10;0.0;1.0;0.04;
+assembly_parallel_energy_guess_cb_poly_coeff_b;optional;-10;10;0.0;3.0;0.3;
+assembly_parallel_energy_guess_vb_poly_coeff_a;optional;-10;10;-1.0;0.0;-0.03;
+assembly_parallel_energy_guess_vb_poly_coeff_b;optional;-10;10;-3.0;0.0;-0.02;
+
+# tolerance level for orthogonality check of rotation matrix (in KPBase1D2D)
+assembly_rotation_matrix_orthogonality_threshold;optional;1.0e-16;1.0e-4;1.0e-16;1.0e-9;1.0e-13;
+
+# bulk solver: offsetting from k = 0 (in order to prevent matrix element mixing)
+bulksolver_gamma_point_offsetting_value;optional;0.0;0.1;1.0e-10;0.01;0.001;
+
+###################################################
+# kp matrix creation control
+###################################################
+# burt & foreman emphasized the need for proper operator ordering.
+# before, people were using symmetrization of all individual
+# terms. if you want to see the influence of the symmetrization,
+# you may flag this option here, but don't expect your
+# results to be valid anymore ...
+kpmatrix_disable_foreman_enable_symmetrization;optional;0;1;0;1;0;
+kpmatrix_zincblende_8x8_skip_renormalization;optional;0;1;0;1;0;
+
+# switch on/off strain dependence of different terms
+# of course, a strain field must be available for this
+kpmatrix_ignore_second_order_strain_dependence;optional;0;1;0;1;0;
+kpmatrix_ignore_first_order_strain_dependence;optional;0;1;0;1;0;
+kpmatrix_ignore_zero_order_strain_dependence;optional;0;1;0;1;0;
+kpmatrix_include_spin_orbit_strain_dependence;optional;0;1;0;1;1;
+
+# wurtzite matrices may include the "real" spin orbit
+# coupling derived by Ren et Al. Appl. Phys. Lett. 74 (1999)
+# currently, chuangs model is used where spin orbit is only
+# included phenomenologically via k = 0 energy offsets
+kpmatrix_wurtzite_include_spin_orbit_interaction;optional;0;1;0;1;1;
+kpmatrix_wurtzite_8x8_skip_renormalization;optional;0;1;0;1;0;
+
+##################################################
+# solver / eigensolver controls
+##################################################
+# 0 = auto choice (<4000 dof umfpack, < 80000 pardiso, then ils)
+# 1 = ils (double solver complexized)
+# 2 = umfpack
+# 3 = Laback Band Solver (don't use for non 1D problems)
+# 4 = dummy complex CSR matrix (solver does not work but allows to check
+#     matrices for hermiticity
+# 5 = full lapack solver
+# 6 = aztecOO solver
+# 7 = super lu mt solver
+# 8 = pardiso
+desired_linear_equation_solver;optional;0;8;0;8;0;
+
+# 1 = jdbsym (not really working)
+# 2 = arpack (works ...)
+# 3 = lapack full spectrum solver
+# 4 = remote parallel arpack
+# 5 = JDQZ solver (slow ...)
+desired_eigenvalue_solver;optional;1;5;1;5;2;
+
+# desired eigenvalue solver used for generalized complex unsymmetric problems
+# related to PMLs ...
+# 1 = lapack zggev
+# 2 = lapack zggevx (expert driver, maybe more stable)
+# 3 = JDQZ solver (sparse ... fast here)
+desired_eigenvalue_solver_pml;optional;1;3;1;3;3;
+
+mpi_number_of_threads;optional;1;1000;1;1000;2;
+# 1 = use machine file ./hosts.mpd for mpiexec
+mpi_user_machine_file;optional;0;1;0;1;0;
+# 1 = print residuum of |Ax - b| after solving during arpack iteration
+arpack_check_solver_residuum;optional;0;1;0;1;0;
+# 1 = check if arpack returned M orthogonal eigenvectors
+arpack_check_eigenvectors_m_orthogonal;optional;0;1;0;1;0;
+
+# auto choice settings, optimal use is
+# umfpack for small problems, pardiso for larger problems
+# and ils for very large problems.
+autosolver_umfpack_upper_size_limit;optional;0;1e16;0;1e16;8000;
+autosolver_pardiso_upper_size_limit;optional;0;1e16;0;1e16;500000;
+
+# port range for remote solver
+remote_solver_port_min;optional;1;62000;1024;30000;4500;
+remote_solver_port_max;optional;1;62000;1024;30001;30000;
+
+# start maximum number of parallel remote solvers
+# -1 == use OMP_NUM_THREADS or number of cpus in
+# remote hosts file (filename defined via environment
+# TDKP_REMOTE_HOSTS_FILE or defaults to remote_hosts.dat)
+remote_solver_max_number_of_parallel_solves;optional;-1;1000;-1;1000;-1;
+# remote solver read hostname from TDKP_REMOTE_HOSTS_FILE
+# or default remote_hosts.dat
+remote_solver_read_hostname_list;optional;0;1;0;1;1;
+
+# minimum problem size for eigenproblems that should
+# be started over the network (via rsh)
+remote_solver_minimum_rsh_size;optional;-1;1.0e20;-1;1.0e6;10000;
+# remote solver uses umfpack for smaller problems (nonsymmetric matrices)
+# and pardiso for bigger problems.
+remote_solver_umfpack_upper_size_limit;optional;0;1e16;0;1e16;8000;
+# set to 1 if you would like to have log files of remote solvers
+# telling what they are doing
+remote_solver_create_logfiles;optional;0;1;0;1;0;
+
+###################################################
+# arpack settings                                 #
+###################################################
+
+# precision for determing eigenvalues
+arpack_tolerance;optional;0;1.0e-3;1.0e-16;1.0e-3;1.0e-13;
+# the minimum number of arnoldi vectors
+arpack_min_arnoldi_vecs;optional;20;1000;25;1000;30;
+# max number of arnoldi iterations
+arpack_max_arnoldi_iterations;optional;1;10000;25;300;250;
+# the oversize, means:
+# num_arnoldi_vec = max(arpack_min_arnoldi_vec, arpack_min_arnoldi_oversize + nev)
+arpack_min_arnoldi_oversize;optional;1;10000;5;100;40;
+
+##################################################
+# pardiso settings                               #
+##################################################
+pardiso_message_level;optional;0;1;0;1;0;
+
+##################################################
+# ils settings                                   #
+##################################################
+ils_use_set;optional;0;100;0;100;1;
+ils_max_iterations;optional;1;1000;10;300;200;
+
+##################################################
+# jdbsym settings                                #
+##################################################
+
+jdbsym_first_port_to_try;optional;1;62000;1024;10000;4500;
+jdbsym_last_port_to_try;optional;1;62000;1024;10000;5000;
+
+##################################################
+# LAPACK settings                                #
+##################################################
+# zhbgvx is a eigenvalue solver for hermitian band matrices which is able
+# to calculate a few eigenvalues in a certain interval. due to the energy
+# guess the desired eigenvalue should always be at 0. so we define here the
+# interval in which we are looking for our values
+# cb/vb gets different bounds
+lapack_zhbgvx_cb_calc_lower_bound;optional;-10;10;-3.0;3.0;-0.5;
+lapack_zhbgvx_cb_calc_upper_bound;optional;-10;10;-5.0;5.0;3.0;
+lapack_zhbgvx_vb_calc_lower_bound;optional;-10;10;-3.0;3.0;-0.4;
+lapack_zhbgvx_vb_calc_upper_bound;optional;-10;10;-5.0;5.0;0.3;
+# or you also may ask for a full spectrum calculation
+# which is definitively way too slow!
+lapack_zhbgvx_calculate_full_spectrum;optional;0;1;0;1;0;
+lapack_hermitian_eigensolver;optional;1;3;1;3;3;
+
+##################################################
+# JDQZ settings
+# see JDQZ manual for details
+##################################################
+# 1 = gmres, 2 = bicgstab
+jdqz_linsolv_method;optional;1;2;1;2;2;
+jdqz_tolerance;optional;1.0e-16;1.0e-4;1.0e-13;1.0e-8;1.0e-8;
+jdqz_gmres_search_space_m;optional;1;100;1;100;30;
+jdqz_bicgstab_polynomial;optional;1;10;1;10;2;
+jdqz_linsolv_max_num_matvec;optional;10;10000;10;10000;100;
+jdqz_max_jd_iterations;optional;100;10000;100;10000;1000;
+jdqz_eigenvalue_lock;optional;1.0e-16;1.0e-6;1.0e-16;1.0e-6;1.0e-13;
+jdqz_testspace_expansion_method;optional;1;3;1;3;3;
+# search 0 = nearest to target,-1 smallest real part, 1 larget real part
+# -2 = smallest imaginary part, 2 = larget imaginary part
+jdqz_eigenvalue_order;optional;-2;2;-2;2;0;
+
+##################################################
+# density of states calculation control
+##################################################
+# when looking for peaks in the dos, i search for energies
+# where |E'(k)| is zero (where E(k) is the spline interpolation
+# of the calculated energy). the spacing is in nm
+dos_peak_search_k_space_spacing;optional;1.0e-8;0.1;0.0001;0.1;0.005;
+# threshold for the derivative to be counted as a peak
+dos_peak_threshold;optional;1.0e-50;1.0;1.0e-8;1.0e-2;1.0e-3;
+# taking the log to base 10 of the derivative multiplied by the following
+# number gives the number of addiationally inserted points into the energy
+# space
+dos_peak_increments;optional;0;100;1;16;4;
+# maximum number of inserted points per interval
+dos_peak_max_increments;optional;0;1000;16;256;128;
+# minimum points on the energy axis of the dos
+dos_min_energy_axis_points;optional;16;1.0e6;32;10000;513;
+# if total dos gets too dense, this factor serves as a limit
+dos_total_dos_maximum_points;optional;16;1.0e12;100;1.0e10;2000;
+
+###################################################
+# slc / clc controls                              #
+###################################################
+fermi_density_solver_tolerance;optional;1.0e-50;1;1.0e-30;1.0e-5;1.0e-12;
+slc_use_splines_for_interpolation;optional;0;1;0;1;1;
+
+# switch between lineshape functions
+# 1 = cosh
+# 2 = lorentzian
+slc_selected_lineshape_function;optional;1;2;1;2;1;
+
+# number of points for evaluation the angular integral of coulomb integral
+clc_radial_angular_integration_well_num_points;optional;0;50000;80;600;60;
+clc_radial_angular_integration_bulk_num_points;optional;0;50000;80;600;60;
+# solve matrix equation for lambda_k
+clc_solve_self_consistent_lambda_k;optional;0;1;0;1;1;
+# include exchange shifts
+clc_include_exchange_shifts;optional;0;1;0;1;1;
+# tolerance of iterative gmres solver
+clc_gmres_tolerance;optional;0;1.0;1.0e-15;1.0e-4;1.0e-6;
+# which linear equation solver to use in clcshf
+# 1 = lapack's zgesv
+# 2 = netlib's adaption of gmres
+# 3 = both and compare values and tell me timings and a lot of information ...
+clc_linear_equation_solver;optional;1;3;1;3;2;
+
+##################################################
+# interface controls                             #
+##################################################
+
+# thresholds for consitency check between min/max band edges supplied
+# by aqua (via interface) and determined via calculate bandedges
+# problem is: tdkp determines bandedges at element midpoints, aqua
+# determines bandedges at vertices which are not placed on the interfaces
+# warn if difference is higher than this
+interface_bandedges_warn_threshold;optional;0.0;1.0;0.0;0.01;0.005;
+# quit if difference is higher than this
+interface_bandedges_quit_threshold;optional;0.0;1.0;0.0;0.01;0.015;
+
+
+###################################################
+# PML controls                                    #
+###################################################
+# pml stretch is sz(x) = 1 + (alpha + i beta) x^power
+pml_default_alpha_real_stretch;optional;0;100;0;3.0;1.0;
+pml_default_beta_imag_stretch;optional;0;100;0;3.0;1.4;
+pml_default_stretch_power;optional;0;10;0;4.0;2.0;

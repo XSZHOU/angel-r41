@@ -1,0 +1,114 @@
+# confdef: material_diamond.cnf
+#
+# RULE 1: include a definition file via "# confdef:" on the first line
+# RULE 2: do not put a ";" or something else at the end
+# RULE 3: everything behind a # is neglected (except # tdkpconfdef)
+#
+# References:
+# Adachi: S. Adachi, Properties of Group II-V and II-VI Semiconductors, Wiley, 2005
+
+#####################################################
+# BAND PARAMETERS
+#####################################################
+
+electron_effective_mass 		= 1.08		# effDOS mass, Neamen. Dessis: 1.09025
+#electron_effective_mass 		= 0.25
+hole_effective_mass     		= 0.56		# effDOS mass, Neamen. Dessis: 1.15247
+
+#bandgap_300K           		= 1.124 	# Dessis
+bandgap_0K 						= 1.17 		# [eV] indirect gap; ioffe.ru 
+bandgap_alpha					= 4.73e-4	# [eV/k] ioffe.ru
+bandgap_beta					= 646		# [K] ioffe.ru
+#electron_affinity      		= 4.05		# Neamen: 4.01
+valence_band_edge				= 0.0		# ARBITRARY, taken to be GaAs (only differences to other materials matter)
+
+luttinger_parameter_1  			= 4.285 	# Adachi
+luttinger_parameter_2  			= 0.339		# Adachi
+luttinger_parameter_3  			= 1.446		# Adachi
+spin_orbit_splitting   			= 0.043		# [eV] Adachi
+
+lattice_constant     			= 5.431		# [A] Adachi
+elastic_constant_C11 			= 165e9 	# [Pa] Adachi
+elastic_constant_C12 			=  64e9 	# [Pa] Adachi
+elastic_constant_C44 			=  80e9 	# [Pa] Adachi
+
+
+#####################################################
+# MOBILITY, DIELECTRIC CONSTANT
+#####################################################
+
+static_dielectric_constant 		= 12.6		# 11.6@300K, Adachi; was 11.7 (Neamen); adjusted s.th. difference ~ GaAs (for testing)
+optic_dielectric_constant 		= 11.6		# same as static (diamond)
+
+electron_mobility 				= 0.1417 	# m2/Vs, =1417cm2/Vs. Neamen: 0.1350
+hole_mobility    				= 0.04705	# m2/Vs, = 407.5cm2/Vs. Neamen: 0.0480
+
+# Arora mobility model 
+# (http://www-tcad.stanford.edu/~prophet/user_ref/node6.html)
+mobility_arora_Amin_e			= 0.0088	# m2/Vs
+mobility_arora_alphamin_e		= -0.57
+mobility_arora_Ad_e				= 0.1252	# m2/Vs
+mobility_arora_alphad_e			= -2.33
+mobility_arora_AN_e				= 1.25e23	# m-3
+mobility_arora_alphaN_e			= 2.4
+mobility_arora_Aa_e				= 0.88
+mobility_arora_alphaa_e			= -0.146
+mobility_arora_Amin_h			= 0.00543	# m2/Vs
+mobility_arora_alphamin_h		= -0.57
+mobility_arora_Ad_h				= 0.0407	# m2/Vs
+mobility_arora_alphad_h			= -2.23
+mobility_arora_AN_h				= 2.35e23	# m-3
+mobility_arora_alphaN_h			= 2.4
+mobility_arora_Aa_h				= 0.88
+mobility_arora_alphaa_h			= -0.146
+
+#####################################################
+# RECOMBINATION-GENERATION PARAMETERS
+#####################################################
+
+radiative_coefficient         	= 1e-20
+srh_electron_lifetime         	= 1e-5
+srh_hole_lifetime             	= 3e-6
+auger_electron_coefficient    	= 1e-50
+auger_hole_coefficient        	= 1e-50
+gamma						  	= 1e-5 	# decay rate
+
+# Overstraeten-deMan avalanche generation model
+avalanche_overstraeten_Enull     = 4e7			# V/m
+avalanche_overstraeten_alow_e    = 7.03e7		# 1/m
+avalanche_overstraeten_ahigh_e   = 7.03e7 		# 1/m
+avalanche_overstraeten_blow_e    = 1.231e8		# V/m
+avalanche_overstraeten_bhigh_e   = 1.231e8		# V/m
+avalanche_overstraeten_alow_h    = 1.582e8 		# 1/m
+avalanche_overstraeten_ahigh_h   = 6.71e7 		# 1/m
+avalanche_overstraeten_blow_h    = 2.036e8		# V/m
+avalanche_overstraeten_bhigh_h   = 1.693e8		# V/m
+avalanche_overstraeten_hbaromega = 0.063		# eV
+#avalanche_overstraeten_kTnull   = 0.025852157  # eV
+avalanche_overstraeten_kTnull    = 0.0001  # eV
+
+# obsolete quantities
+#intrinsic_density    			= 1e16  # SI units!
+#intrinsic_density_2d 			= 1e8   # = ni_3D * 1e-8m, needed for BndCond
+#intrinsic_density_1d 			= 1e0   # = ni_3D * 1e-16m^2, needed for BndCond
+#radiative_coefficient_2d  		= 7.2e-8    # = B_3D / 1e-8m
+#radiative_coefficient_1d  		= 7.2e-0    # = B_3D / 1e-16m^2
+#auger_electron_coefficient_2d  = 1e-26     # = Cn_3D / 1e-16m^2
+#auger_electron_coefficient_1d  = 1e-10     # = Cn_3D / 1e-32m^4
+#auger_hole_coefficient_2d      = 1e-26     # = Cp_3D / 1e-16m^2
+#auger_hole_coefficient_1d      = 1e-10     # = Cp_3D / 1e-32m^4
+
+#####################################################
+# OTHER PARAMETERS
+#####################################################
+
+# optical phonon scattering
+LO_phonon_energy 			= 0.0644 	# [eV] Adachi, 300K
+TO_phonon_energy 			= 0.0644 	# [eV] Adachi, 300K
+# note: POP would be zero, but we artificially set static_dielectric<>optic_dielectric
+
+# acoustic phonon scattering
+mass_density                             = 2329.0 # [kg m-3] Lundstrom, p.114
+longitudinal_acoustic_velocity           = 9040.0 # [m/s] Lundstrom, p.114
+electron_acoustic_deformation_potential  = 9.5    # [eV] Lundstrom, p.114
+hole_acoustic_deformation_potential      = 5.0    # [eV] Lundstrom, p.114

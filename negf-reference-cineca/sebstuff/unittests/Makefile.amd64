@@ -1,0 +1,55 @@
+# MAKEFILE UNITTESTS, PROJECT GAIN
+# PLATFORM: AMD
+
+# ------------------------------------------------------------------------------
+# *** platform settings ***
+
+BASE_PATH    = /home/steiger/src/release/amd64
+
+DFISE_PATH   = $(BASE_PATH)/DF-ISE_debug
+VTK_PATH     = $(BASE_PATH)/vtk
+ILS_PATH     = $(BASE_PATH)/ils2
+SUPERLU_PATH = /home/veprek/src/release/amd64/debug/SuperLU_MT
+UMFPACK_PATH = $(BASE_PATH)/umfpack/UMFPACK
+UFCONFIG_PATH= $(BASE_PATH)/umfpack/UFconfig
+UMFAMD_PATH  = $(BASE_PATH)/umfpack/AMD/Include
+BOOST_PATH   = $(BASE_PATH)/boost_1_33_1
+FLENS_PATH   = $(BASE_PATH)/flens_0608
+CBLAS_PATH   = $(BASE_PATH)/gsl/include/gsl
+MPI_PATH     = $(BASE_PATH)/mpich2/include
+ACML_PATH    = $(BASE_PATH)/ACML/gfortran/gfortran64/include
+TDKP_PATH    = $(BASE_PATH)/tdkp
+
+LIB_PATH     =  $(BASE_PATH)/lib
+INC_PATH     =  $(BASE_PATH)
+
+DEF_LIBS     = -lstdc++ -lm -lgcc_s -lc -lrt
+GCC_LIBS     = -L$(LIB_PATH)/gcc -lgfortran -lgomp -lstdc++ -lgcc_s 
+LINALG_LIBS  = -L$(LIB_PATH) -lflens -lacml -lacml_mv 
+DFISE_LIBS   = -L$(LIB_PATH) -lDF-ISE++ -lDF-ISE
+VTK_LIBS     = -L$(BASE_PATH)/vtk/lib -lvtkCommon -lvtkIO
+ILS_LIBS     = -L$(LIB_PATH) -lils 
+METIS_LIBS   = -L$(LIB_PATH) -lmetis
+ARPACK_LIBS  = -L$(LIB_PATH) -larpack
+PARDISO_LIBS = -L$(LIB_PATH) -lpardiso_GNU42_AMD64_INT64_P
+UMFPACK_LIBS = -L$(LIB_PATH) -lumfpack
+SUPERLU_LIBS = -L$(LIB_PATH) -lsuperlu_mt
+MPI_LIBS     = -L$(LIB_PATH) -lmpich -lmpichcxx
+TDKP_LIBS    = -L$(LIB_PATH) -ltdkp
+
+# ------------------------------------------------------------------------------		
+# *** set here which compiler to use ***
+
+#CPP	       = g++-4.3.0
+CPP	       = mpicxx
+CPP_FLAGS  = -Wall -Wno-deprecated -fPIC -g -DDEBUG -DAMD -DMPICH_IGNORE_CXX_SEEK -m64
+CPP_LIBS   = -nodefaultlibs -Bdynamic $(DEF_LIBS) $(DFISE_LIBS) $(ILS_LIBS) -lz $(LINALG_LIBS) $(OMP_LIBS)
+
+# ------------------------------------------------------------------------------
+# *** from here on the makefile is platform- and compiler-independent ***
+# *** unittests.negf is found in the master directory
+
+CXXTEST_DIR = /home/steiger/CPP/cxxtest
+TESTGEN = $(CXXTEST_DIR)/cxxtestgen.pl 
+
+include unittests.negf

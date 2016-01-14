@@ -1,0 +1,153 @@
+# confdef: material_zincblende.cnf
+# simple zincblende material definition ....
+#
+# RULE 1: include a definition file via "# confdef:" on the first line
+# RULE 2: do not put a ";" or something else at the end
+# RULE 3: everything behind a # is neglected (except # tdkpconfdef)
+#
+# References:
+# Vurgaftman: Vurgaftman, Meyer and Ram-Mohan, J.Appl.Phys. 89, 5815 (2001)
+# Adachi: S. Adachi, Properties of Group II-V and II-VI Semiconductors, Wiley, 2005
+# Dessis Device Simulator
+# Chuang: S.L.Chuang, Physics of Optoelectronic Devices, Wiley
+# Piprek: J. Piprek, Semiconductor Optoelectronic Devices, Associated Press (2003)
+# Sootodeh: Sootodeh et al., J. Appl. Phys. 87, 2890 (2000)
+# Heilman: Heilman and Oelgart, Semicond. Sci. Tech. 5, 1040 (1990)
+
+#####################################################
+# BAND PARAMETERS
+#####################################################
+
+bandgap_0K         				=  3.099    # [eV] Vurgaftman
+bandgap_alpha      				=  8.85e-4  # [eV/K] Vurgaftman
+bandgap_beta       				=  530      # [K]  Vurgaftman
+valence_band_edge				= -0.53		# [eV] Vurgaftman, =GaAs-0.53eV; ioffe.ru: GaAs-0.46eV
+
+electron_effective_mass 		= 0.15  	# Vurgaftman, Chuang
+#hole_effective_mass 			= 0.79  	# Chuang, effective DOS mass (HH). Piprek: 0.804 
+hole_effective_mass 			= 0.2 
+
+luttinger_parameter_1  			= 3.76 		# Vurgaftman
+luttinger_parameter_2  			= 0.82 		# Vurgaftman
+luttinger_parameter_3  			= 1.42 		# Vurgaftman
+optical_matrix_element 			= 21.1		# Vurgaftman
+spin_orbit_splitting   			= 0.28		# Vurgaftman
+
+strain_potential_ac  			= -5.64		# Vurgaftman
+strain_potential_av  			=  2.47		# Vurgaftman: minus sign. here a = ac-av
+strain_potential_b   			= -2.3		# Vurgaftman
+strain_potential_d   			= -3.4		# Vurgaftman
+
+lattice_constant     			= 5.6611 	# [Angstrom] 300K, Vurgaftman
+elastic_constant_C11 			= 1250e9	# [Pa] Vurgaftman
+elastic_constant_C12 			=  534e9	# [Pa] Vurgaftman
+elastic_constant_C44 			=  542e9	# [Pa] Vurgaftman
+
+
+#####################################################
+# MOBILITY, DIELECTRIC CONSTANT
+#####################################################
+
+static_dielectric_constant 		= 10.06  	# 300K, ioffe.ru, Adachi
+optic_dielectric_constant 		=  8.16  	# 300K, ioffe.ru 
+static_dielectric_constant_T	=  0.0		# [1/K] deps/dT, unknown
+
+donor_ionization_energy 		= 0.0058	# same as GaAs take
+donor_degeneracy 				= 2			# same as GaAs taken
+acceptor_ionization_energy 		= 0.0802	# [eV] Zn, Heilman
+acceptor_degeneracy 			= 2			# same as GaAs taken
+#acceptor_ionization_energy 	= 0.14226	# [eV] C, Heilman
+
+electron_mobility 				= -0.10 	# [m2/Vs] 300K, ioffe.ru (for AlGaAs, x<0.4)
+hole_mobility     				= 0.005		# [m2/Vs] 300K, ioffe.ru (for AlGaAs, x<0.4)
+#electron_mobility 				= 0.0294 	# [m2/Vs] 300K, Adachi
+#hole_mobility     				= 0.0105	# [m2/Vs] 300K, Adachi
+
+# Arora mobility model
+# Dessis GaAs
+#mobility_arora_Amin_e			= 0.2136	# [m2/Vs]
+#mobility_arora_alphamin_e		= -0.7457
+#mobility_arora_Ad_e			= 0.6331	# [m2/Vs]
+#mobility_arora_alphad_e		= -2.687
+#mobility_arora_AN_e			= 7.345e22	# [m-3]
+#mobility_arora_alphaN_e		= 3.535
+#mobility_arora_Aa_e			= 0.6273
+#mobility_arora_alphaa_e		= -0.1441
+#mobility_arora_Amin_h			= 0.002148	# [m2/Vs]
+#mobility_arora_alphamin_h		= -1.124
+#mobility_arora_Ad_h			= 0.03312	# [m2/Vs]
+#mobility_arora_alphad_h		= -2.366
+#mobility_arora_AN_h			= 5.136e23	# [m-3]
+#mobility_arora_alphaN_h		= 3.69
+#mobility_arora_Aa_h			= 0.8057
+#mobility_arora_alphaa_h		= 0.0
+
+# Arora mobility model
+# from Piprek / Sootodeh
+mobility_arora_Amin_e			= 0.0010	# [m2/Vs]
+#mobility_arora_Amin_e			= 0.0001	# [m2/Vs]
+mobility_arora_alphamin_e		= 0.0
+mobility_arora_Ad_e 			= 0.0390	# [m2/Vs]
+#mobility_arora_Ad_e 			= 0.0039	# [m2/Vs]
+mobility_arora_alphad_e			= -2.1
+mobility_arora_AN_e				= 5.46e23	# [m-3]
+mobility_arora_alphaN_e			= +3.0
+mobility_arora_Aa_e				= 1.0
+mobility_arora_alphaa_e			= 0.0
+mobility_arora_Amin_h			= 0.0010	# [m2/Vs]
+#mobility_arora_Amin_h			= 0.0001	# [m2/Vs]
+mobility_arora_alphamin_h		= 0.0
+mobility_arora_Ad_h 			= 0.0190	# [m2/Vs]
+#mobility_arora_Ad_h 			= 0.0019	# [m2/Vs]
+mobility_arora_alphad_h			= -2.24
+mobility_arora_AN_h				= 3.84e23	# [m-3]
+mobility_arora_alphaN_h			= +3.0
+mobility_arora_Aa_h				= 0.488
+mobility_arora_alphaa_h			= 0.0
+
+#####################################################
+# RECOMBINATION-GENERATION PARAMETERS
+#####################################################
+#
+# taken to be same as GaAs at the moment
+#
+radiative_coefficient         	= 7.2e-16
+srh_electron_lifetime         	= 1e-9		# [s] taumax
+srh_hole_lifetime             	= 1e-9
+#srh_electron_lifetime_wire    	= 1e-8		# [s] taumax
+#srh_hole_lifetime_wire        	= 1e-8
+srh_taumin                    	= 0.0
+srh_Nref                      	= 1e22 		# [m-3] for doping dependence
+srh_Talpha                    	= -1.5 		# for temperature dependence (<=0)
+srh_gamma                     	= 1.0  		# for doping dependence
+auger_electron_coefficient    	= 1e-42		# [m^6/s]
+auger_hole_coefficient        	= 1e-42
+gamma						  	= 1e-10 	# [1/s] decay rate
+
+# Overstraeten-deMan avalanche generation model
+avalanche_overstraeten_Enull     = 4.00e7	# [V/m]
+avalanche_overstraeten_alow_e    = 2.27e8	# [1/m]
+avalanche_overstraeten_ahigh_e   = 2.27e8	# [1/m]
+avalanche_overstraeten_blow_e    = 1.13e8	# [V/m]
+avalanche_overstraeten_bhigh_e   = 1.13e8	# [V/m]
+avalanche_overstraeten_alow_h    = 3.95e8	# [1/m]
+avalanche_overstraeten_ahigh_h   = 3.95e8	# [1/m]
+avalanche_overstraeten_blow_h    = 1.45e8	# [V/m]
+avalanche_overstraeten_bhigh_h   = 1.45e8	# [V/m]
+avalanche_overstraeten_hbaromega = 0.035	# [eV]
+avalanche_overstraeten_kTnull    = 0.02585  # [eV]
+
+
+#####################################################
+# OTHER PARAMETERS
+#####################################################
+
+# optical phonon scattering
+LO_phonon_energy 			= 0.0501 	# [eV] ioffe.ru, = 36.25 + 1.83*1 + 17.12*1^2 - 5.11*1^3
+TO_phonon_energy 			= 0.0331 	# [eV] GaAs
+
+# acoustic phonon scattering
+mass_density                             = 3760.0 # [kg m-3] ioffe.ru, from 5.32 - 1.56*1; Adachi: 3730
+longitudinal_acoustic_velocity           = 6260.0 # [m/s] ioffe.ru, [110], from 5.24 + 0.78*1 + 0.24*1^2
+electron_acoustic_deformation_potential  = 7.01   # [eV] GaAs
+hole_acoustic_deformation_potential      = 3.5    # [eV] GaAs

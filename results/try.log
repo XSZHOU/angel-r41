@@ -105,3 +105,42 @@ Done creating interface.
 |--------------------------------------------------------------------|
 Allocating memory for a NEGF object with Nx=61, Nn=2, Nk=40
 Allocating memory for a NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*7 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+finished allocating memory for total self energy.
+|--------------------------------------------------------------------|
+|                   setting up contact self-energy                   |
+|--------------------------------------------------------------------|
+Allocating memory for a banded (2*3 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*3 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*3 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+|--------------------------------------------------------------------|
+|               setting up acoustic phonon self-energy               |
+|--------------------------------------------------------------------|
+Allocating memory for a banded (2*3 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*3 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Allocating memory for a banded (2*3 offdiags) NEGF object with Nx=61, Nn=2, Nk=40
+Material "GaAs" is taken for the bulk optical phonon properties.
+Deformation potential band 1: 7
+Deformation potential band 2: 3.5
+Mass density: 5.4e+03[kg m-3]
+Speed of sound: 5.2e+03[m/s]
+Lattice constant: 5.65[A]
+Total AC phonon scattering prefactor (band 0): 0.00022
+|--------------------------------------------------------------------|
+|               setting up post-processing quantities                |
+|--------------------------------------------------------------------|
+|--------------------------------------------------------------------|
+|       setting up inner loop with Dyson and Keldysh equation        |
+|--------------------------------------------------------------------|
+---------------------------------------------------
+Calculating contact 0 density of states from GR
+---------------------------------------------------
+Calculating retarded contact self-energy w/o potential
+Calculating GR w/o potential
+p0: GR(E=0,:)...   p0: GR(E=10,:)...   

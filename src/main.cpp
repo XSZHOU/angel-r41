@@ -16,7 +16,7 @@ fitness for a particular purpose. See also <http://www.gnu.org/licenses/>.
 #include "Timer.h"
 #include "Filenames.h"
 #include "Interrupt.h"
-#include "MPI.h"
+#include "MPIs.h"
 
 #include "InputParser.h"
 #include "MaterialDatabase.h"

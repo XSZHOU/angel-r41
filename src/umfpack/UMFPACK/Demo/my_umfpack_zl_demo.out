@@ -729,8 +729,7 @@ UMFPACK V5.2.0 (Nov 1, 2007), Info:
     numeric factorization reallocations:           1
     costly numeric factorization reallocations:    1
     numeric factorization CPU time (sec):          0.00
-    numeric factorization wallclock time (sec):    0.01
-    numeric factorization mflops (wallclock):      0.00
+    numeric factorization wallclock time (sec):    0.00
 
     solve flops:                                   5.15000e+02
     iterative refinement steps taken:              0

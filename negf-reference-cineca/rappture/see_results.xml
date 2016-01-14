@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<run>
+    <tool>
+        <title>ANGEL</title>
+        <about>
+A Nonequilibrium Green Solver for LEDS.
+(c) 2008-2010 Sebastian Steiger, ETH Zurich and Purdue University. steiger@purdue.edu
+</about>
+        <command>
+      @tool/rapp_angel.bin @driver  
+    </command>
+        <limits>
+            <cputime>900</cputime>
+            <filesize>1000000</filesize>
+        </limits>
+        <layout>xxx</layout>
+        <control>xxx</control>
+        <analyzer>xxx</analyzer>
+        <reportJobFailures>1</reportJobFailures>
+    </tool>
+    <input>
+    </input>
+    <output>
+        <sequence id="nE">
+            <about>
+                <label>n(x,E)</label>
+                <description> spectrally resolved density </description>
+            </about>
+            <index>
+                <label>Voltage</label>
+                <units>V</units>
+            </index>
+        </sequence>
+        <sequence id="LDOS">
+            <about>
+                <label>LDOS(x,E)</label>
+                <description> local density of states </description>
+            </about>
+            <index>
+                <label>Voltage</label>
+                <units>V</units>
+            </index>
+        </sequence>
+        <sequence id="JE">
+            <about>
+                <label>J(x,E)</label>
+                <description> spectrally resolved current </description>
+            </about>
+            <index>
+                <label>Voltage</label>
+                <units>V</units>
+            </index>
+        </sequence>
+        <curve id="IV">
+            <about>
+                <label>IV-curve</label>
+                <description>Current-voltage characteristics</description>
+            </about>
+            <xaxis>
+                <label>Voltage</label>
+                <units>V</units>
+            </xaxis>
+            <yaxis>
+                <label>Current</label>
+                <units>A/cm2</units>
+            </yaxis>
+            <component>
+                <!-- <xy>...</xy> -->
+            </component>
+        </curve>
+    </output>
+</run>
+

@@ -1,0 +1,11 @@
+echo "set size ratio -1 4,4" > plot.gp
+echo "set terminal png" >> plot.gp
+echo "unset key" >> plot.gp
+
+for i in data/*.dat; do
+    b=${i%.dat}
+    b=${b#data/}
+    echo "set output 'image/$b.png'"
+    echo "plot [0:10.000000][0:10.000000] 'data/$b.dat' using 1:2:(\$3) :(\$4) with vector"
+done >> plot.gp
+

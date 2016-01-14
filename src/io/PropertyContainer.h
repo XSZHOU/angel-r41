@@ -587,7 +587,7 @@ void PropertyContainer<T>::set(const char* key, T value) throw(Exception*) {
 
 template<class T>
 void PropertyContainer<T>::set(const string& key, T value) throw(Exception*) {
-    std::cout<<"Here we gogo !"<<(this->valid_key(key))<<std::endl;
+    //std::cout<<"Here we gogo !"<<(this->valid_key(key))<<std::endl;
 	this->check_proper_initialization();
     //*{    S.Z.
 	if(!this->valid_key(key)) {

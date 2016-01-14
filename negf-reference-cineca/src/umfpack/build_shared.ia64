@@ -1,0 +1,2 @@
+icpc -shared -Wl,-soname,libumfpack.so -o libumfpack.so `ls UMFPACK/Lib/*.o AMD/Lib/*.o`
+  

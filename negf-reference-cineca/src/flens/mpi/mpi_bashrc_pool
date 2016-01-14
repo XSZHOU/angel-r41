@@ -1,0 +1,2 @@
+export LD_LIBRARY_PATH=/opt/intel/mkl/8.1.1/lib/em64t:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/stip/FLENS-lite:$LD_LIBRARY_PATH

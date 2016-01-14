@@ -1,0 +1,15 @@
+
+# tdkpconfdef: controls.cnf
+
+output_eigensolver_statistics        = 1
+
+assembly_build_nonsymmetric_matrices = 1
+assembly_ignore_first_order          = 0
+assembly_ignore_first_order_diagonal = 1
+assembly_check_matrix_for_symmetry   = 1
+assembly_save_matrices_to_file       = 0
+
+kp8x8_read_s_parameter_from_material_file = 0
+
+#kp8x8_expect_states_at_energy = 0.0
+
