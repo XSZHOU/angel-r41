@@ -15,8 +15,9 @@ wget https://github.com/XSZHOU/negf-reference/archive/master.zip
 
 
 Compile(Cineca):
-0. clean everything
-   /src/flens:/src/flens/flens:/umfpack/UMFPACK:/umfpack/UMFPACK/Source  -> make clean 
+0. clean everything ./src ->make clean
+   /src/flens:/src/flens/flens:/umfpack/UMFPACK:/umfpack/UMFPACK/lib  -> make clean
+   tar -czvf test_negf.tar.gz ./negf-reference-master/* 
 1. find the required libs
 module av/li/purge
 2. load them consistently
