@@ -1,0 +1,18 @@
+#The original code is from nanohub, authored by S.Steiger
+#This version is compiled by S.Z. @PoliTo 02.2016
+
+
+#Execute the following command to see NEGF calculation of a PN junction
+module load autoload intelmpi/5.0.2--binary
+module load autoload boost/1.58.0--intelmpi--5.0.2--binary
+module load autoload mkl/11.2--binary
+module load autoload fftw/3.3.4--intelmpi--5.0.2--binary 
+cd ./src
+make
+cd ../bin
+qsub job.sh    #  ->Wait for the result, stored at ./results
+
+
+#input files
+./bin ->  pn.cmd qw.cmd
+./materials  -> cmd.cnf

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-#CC=$CC
-CC=icc
-$CC -nostartfiles -DMKL_ILP64 -I${MKL_INC} -shared -o libumfpack.so `ls UMFPACK/Lib/*.o AMD/Lib/*.o` -L${MKL_LIB} -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential -lpthread -lm
-##$CC -DMKL_ILP64 -I${MKL_INC}  -shared -Wl,-install_name,libumfpack.so -o libumfpack.so `ls UMFPACK/Lib/*.o AMD/Lib/*.o`
- 

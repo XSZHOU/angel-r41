@@ -1,4 +1,0 @@
-#!/bin/sh
-
-/usr/bin/invoke_app "$@" -C rappture -t angel \
-                         -u mpich2-1.3-gnu-4.7.2
